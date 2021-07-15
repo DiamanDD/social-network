@@ -13,7 +13,7 @@ export const MyPosts = () => {
                     <button>ADD Post</button>
                 </div>
             </div>
-            <Posts message={"Привет я Маша"} likes={10}/>
+            <Posts message={"Привет я Маша"} likes={25}/>
             <Posts message={"Привет я Вова"} likes={23}/>
             <Posts message={"Привет я Степа"} likes={12}/>
 
