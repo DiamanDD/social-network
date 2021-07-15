@@ -1,37 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import {Header} from "./component/Header";
+import {NavBar} from "./component/NavBar";
+import {Profile} from "./component/Profile";
+
 
 function App() {
-  return (
-      <div className="app-wrapper">
-        <header className="header">
-          <img className={"imgNav"}
-               src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvXesR3xNbNhV4X5G2qsCUb3FFmBdVTBa4Aw&usqp=CAU"}/>
-        </header>
-        <nav className={"nav"}>
-          <div>
-            <a href="#">Profile</a>
-          </div>
-          <div>
-            <a href="#">Message</a>
-          </div>
-          <div>
-            <a href="#">News</a>
-          </div>
-          <div>
-            <a href="#">Musics</a>
-          </div>
-          <div>
-            <a href="#">Settings</a>
-          </div>
-
-        </nav>
-        <div className="content">
-          content
+    return (
+        <div className="app-wrapper">
+            <Header/>
+            <NavBar/>
+            <Profile/>
         </div>
-      </div>
-  );
+    );
 }
 
 export default App;

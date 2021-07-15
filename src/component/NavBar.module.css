@@ -1,0 +1,18 @@
+
+
+
+.nav{
+  grid-area: n;
+  background: #FFD040;
+}
+
+
+.items {
+  color: #8443D6;
+  font-size: 25px;
+  margin: 5px;
+}
+
+.items.gold{
+  color:orange;
+}

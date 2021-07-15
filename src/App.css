@@ -1,28 +1,15 @@
 
 
 .app-wrapper{
+  width: 1200px;
+  margin: auto;
   display: grid;
-  background:rosybrown;
+  background:#D8FA3F;
   grid-template-areas:
     "h h"
      "n c"   ;
 
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
-}
-.header{
-  grid-area: h;
-}
-.nav{
-  grid-area: n;
-  background: antiquewhite;
-}
-.content{
-  background: blue;
-  grid-area: c;
-}
-
-.header img{
-  height: 100%;
 }
 
