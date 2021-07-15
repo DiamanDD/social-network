@@ -4,22 +4,33 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="app-wrapper">
+        <header className="header">
+          <img className={"imgNav"}
+               src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvXesR3xNbNhV4X5G2qsCUb3FFmBdVTBa4Aw&usqp=CAU"}/>
+        </header>
+        <nav className={"nav"}>
+          <div>
+            <a href="#">Profile</a>
+          </div>
+          <div>
+            <a href="#">Message</a>
+          </div>
+          <div>
+            <a href="#">News</a>
+          </div>
+          <div>
+            <a href="#">Musics</a>
+          </div>
+          <div>
+            <a href="#">Settings</a>
+          </div>
+
+        </nav>
+        <div className="content">
+          content
+        </div>
+      </div>
   );
 }
 
