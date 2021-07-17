@@ -4,16 +4,33 @@ import './App.css';
 import {Header} from "./component/Header/Header";
 import {NavBar} from "./component/NavBar/NavBar";
 import {Profile} from "./component/Profile/Profile";
+import {Dialogs} from "./component/Dialogs/Dialogs";
+
+import {BrowserRouter, Route} from "react-router-dom";
+import {News} from "./component/News/News";
+import {Musics} from "./component/Musics/Musics";
+import {Settings} from "./component/Settings/Settings";
 
 
 function App() {
     return (
-        <div className="app-wrapper">
-            <Header/>
-            <NavBar/>
-            <Profile/>
-        </div>
-    );
-}
+<BrowserRouter>
+            <div className="app-wrapper">
+                <Header/>
+                <NavBar/>
+                <div className={"app-wrapper-content"}>
+                    <Route  path={"/profile"} component={Profile}/>
+                    <Route  path={"/dialogs"} component={Dialogs}/>
+                    <Route path={"/news"} component={News}/>
+                    <Route path={"/musics"} component={Musics}/>
+                    <Route path={"/settings"} component={Settings}/>
 
-export default App;
+                </div>
+
+
+            </div>
+</BrowserRouter>
+            );
+            }
+
+            export default App;
