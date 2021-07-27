@@ -10,27 +10,33 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./component/News/News";
 import {Musics} from "./component/Musics/Musics";
 import {Settings} from "./component/Settings/Settings";
+import {StateType} from "./types/type";
 
 
-function App() {
+
+
+
+
+
+const App:React.FC<StateType>=(State)=> {
+
     return (
-<BrowserRouter>
+        <BrowserRouter>
+
             <div className="app-wrapper">
                 <Header/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-                    <Route  path={"/profile"} component={Profile}/>
-                    <Route  path={"/dialogs"} component={Dialogs}/>
+                    {/*<Route path={"/profile"} component={Profile}/>*/}
+                    <Route path={"/profile"} render={()=> <Profile posts={State.State.posts}  />}/>
+                    <Route path={"/dialogs"} render={() => <Dialogs profilePage={State.State.profilePage} />}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/musics"} component={Musics}/>
                     <Route path={"/settings"} component={Settings}/>
-
                 </div>
-
-
             </div>
-</BrowserRouter>
-            );
-            }
+        </BrowserRouter>
+    );
+}
 
-            export default App;
+export default App;
