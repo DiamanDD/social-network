@@ -5,11 +5,13 @@ import s from "./Posts.module.css"
 type PostsProps = {
     message: string
     likes: number
+
 }
 
 
 export const Posts=  (props:PostsProps):JSX.Element => {
     const {message, likes} = props
+
     return (
 
         <div className={s.post}>

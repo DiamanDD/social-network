@@ -1,4 +1,6 @@
-import { StateTypeElement } from "../types/type";
+import {PostsType, StateTypeElement} from "../types/type";
+import {rerenderEntireThree} from "../render";
+import {ChangeEvent} from "react";
 
 
 export let State: StateTypeElement = {
@@ -29,3 +31,17 @@ export let State: StateTypeElement = {
     ]
 }
 
+
+export const addPostMessage = (posText: string) => {
+    const newpost: PostsType = {
+        id: new Date().getTime(),
+        message: posText,
+        likesCount: 0
+    }
+    State.posts.push(newpost)
+    console.log(State.posts)
+    rerenderEntireThree(State)
+}
+export const onChangePostElements=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+    console.log(e.currentTarget.value)
+}

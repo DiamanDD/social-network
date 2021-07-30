@@ -1,5 +1,3 @@
-
-
 // типизация
 
 export type PostsType = {
@@ -27,9 +25,9 @@ export type profilePageTypeElevents = {
 
 export type StateTypeElement = {
     profilePage: profilePageTypeElevents
-    posts:PostsType[]
-}
+    posts: PostsType[]
 
+}
 
 
 export type StateType = {
