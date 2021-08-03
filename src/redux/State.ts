@@ -1,7 +1,8 @@
 import {PostsType, StateTypeElement} from "../types/type";
-import {rerenderEntireThree} from "../render";
-import {ChangeEvent} from "react";
 
+let rerenderEntireThree=(State:StateTypeElement)=>{
+
+}
 
 export let State: StateTypeElement = {
     profilePage: {
@@ -28,20 +29,31 @@ export let State: StateTypeElement = {
         {id: 5, message: "куку", likesCount: 18},
         {id: 6, message: "ПИВЕТ Привет", likesCount: 15},
         {id: 7, message: "куку", likesCount: 18}
-    ]
+    ],
+    newPost: ""
 }
 
 
-export const addPostMessage = (posText: string) => {
+export const addPostMessage = () => {
     const newpost: PostsType = {
         id: new Date().getTime(),
-        message: posText,
+        message: State.newPost,
         likesCount: 0
     }
-    State.posts.push(newpost)
-    console.log(State.posts)
-    rerenderEntireThree(State)
+    if (State.newPost) {
+        State.posts.push(newpost)
+        rerenderEntireThree(State)
+        State.newPost = ""
+
+    }
 }
-export const onChangePostElements=(e:ChangeEvent<HTMLTextAreaElement>)=>{
-    console.log(e.currentTarget.value)
+
+export const updPostMessage = (updText: string) => {
+    State.newPost = updText
+    rerenderEntireThree(State)
+
+}
+
+export const subscribe=(observe:any)=>{
+rerenderEntireThree=observe
 }

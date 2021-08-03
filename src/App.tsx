@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import "./App.css";
 import {Header} from "./component/Header/Header";
@@ -12,10 +12,11 @@ import {Musics} from "./component/Musics/Musics";
 import {Settings} from "./component/Settings/Settings";
 import {StateType} from "./types/type";
 
-import {addPostMessage, onChangePostElements} from "./redux/State";
+import {addPostMessage, updPostMessage} from "./redux/State";
 
 
 const App: React.FC<StateType> = (State) => {
+
     return (
         <BrowserRouter>
 
@@ -25,8 +26,16 @@ const App: React.FC<StateType> = (State) => {
                 <div className={"app-wrapper-content"}>
                     {/*<Route path={"/profile"} component={Profile}/>*/}
                     <Route path={"/profile"}
-                           render={() => <Profile posts={State.State.posts} addPost={addPostMessage} onchangeClick={onChangePostElements}/>}/>
-                    <Route path={"/dialogs"} render={() => <Dialogs profilePage={State.State.profilePage}/>}/>
+                           render={() => <Profile
+
+                               posts={State.State.posts}
+                               addPost={addPostMessage}
+                               updPost={updPostMessage}
+                               newPost={State.State.newPost}
+
+                           />}/>
+                    <Route path={"/dialogs"} render={() => <Dialogs
+                        profilePage={State.State.profilePage}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/musics"} component={Musics}/>
                     <Route path={"/settings"} component={Settings}/>

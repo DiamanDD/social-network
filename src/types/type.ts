@@ -26,6 +26,7 @@ export type profilePageTypeElevents = {
 export type StateTypeElement = {
     profilePage: profilePageTypeElevents
     posts: PostsType[]
+    newPost:string
 
 }
 

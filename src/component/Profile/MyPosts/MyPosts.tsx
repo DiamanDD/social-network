@@ -1,12 +1,12 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {PostsPropsType} from "../Profile";
 
 import {Posts} from "./Posts/Posts";
-import {log} from "util";
-import { ChangeEvent } from "react";
 
 
 export const MyPosts = (props: PostsPropsType) => {
+
+
 
 
     let postElements = props.posts.map((p) => <Posts
@@ -18,30 +18,35 @@ export const MyPosts = (props: PostsPropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const onclickAddPost = () => {
-        let text = newPostElement.current?.value
-
-        text && props.addPost(text)
-        if (newPostElement.current) newPostElement.current.value=""
+        props.addPost()
+        // let text = newPostElement.current?.value
+              // text && props.addPost()
+        // if (newPostElement.current) newPostElement.current.value=""
 
 
     }
-const onChangeCl=()=>{
-    // props.onchangeClick()
-    return ""
-}
 
-type valueMessage={
-        props:()=>void
-}
+       const onChangePostElements=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+        return props.updPost(e.currentTarget.value)
+    }
+
+
+
     return (
         <div>
             <div>
                 My posts
                 <div>
-                    <textarea ref={newPostElement} onChange={onChangeCl} ></textarea>
+                    <textarea ref={newPostElement}
+                              onChange={onChangePostElements}
+                              value={props.newPost} >
+
+                    </textarea>
                     <button onClick={onclickAddPost}>ADD Post</button>
+
                 </div>
             </div>
+
             {postElements}
 
 
