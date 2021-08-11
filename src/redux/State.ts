@@ -1,59 +1,75 @@
-import {PostsType, StateTypeElement} from "../types/type";
+import {AddPostType, PostsType, storeType, UpdPostType} from "../types/type";
+const ADD_POST = "ADD_POST";
+const UPDATE_POST = "UPDATE_POST";
 
-let rerenderEntireThree=(State:StateTypeElement)=>{
+export const store:storeType={
+    _state:{
+        profilePage: {
+            profile: [
+                {id: 1, userName: "Ivan"},
+                {id: 2, userName: "Ivan2"},
+                {id: 3, userName: "Ivan3"}
+            ],
 
-}
+            message: [
+                {id: 1, message: "hallo1"},
+                {id: 2, message: "hallo2"},
+                {id: 3, message: "hallo3"}
+            ]
 
-export let State: StateTypeElement = {
-    profilePage: {
-        profile: [
-            {id: 1, userName: "Ivan"},
-            {id: 2, userName: "Ivan2"},
-            {id: 3, userName: "Ivan3"}
+
+        },
+
+        posts: [
+            {id: 1, message: "Привет я Маша", likesCount: 12},
+            {id: 2, message: "ПИВЕТ Привет", likesCount: 15},
+            {id: 3, message: "куку", likesCount: 18},
+            {id: 4, message: "ПИВЕТ Привет", likesCount: 15},
+            {id: 5, message: "куку", likesCount: 18},
+            {id: 6, message: "ПИВЕТ Привет", likesCount: 15},
+            {id: 7, message: "куку", likesCount: 18}
         ],
-
-        message: [
-            {id: 1, message: "hallo1"},
-            {id: 2, message: "hallo2"},
-            {id: 3, message: "hallo3"}
-        ]
-
-
+        newPost: ""
     },
+    _rerenderEntireThree(){
+        console.log("rerender")
+    },
+    subscribe(observe:()=>void){
+        this._rerenderEntireThree=observe
+    },
+    getState(){
+        return this._state
+    },
+    dispatch(action){
 
-    posts: [
-        {id: 1, message: "Привет я Маша", likesCount: 12},
-        {id: 2, message: "ПИВЕТ Привет", likesCount: 15},
-        {id: 3, message: "куку", likesCount: 18},
-        {id: 4, message: "ПИВЕТ Привет", likesCount: 15},
-        {id: 5, message: "куку", likesCount: 18},
-        {id: 6, message: "ПИВЕТ Привет", likesCount: 15},
-        {id: 7, message: "куку", likesCount: 18}
-    ],
-    newPost: ""
-}
-
-
-export const addPostMessage = () => {
-    const newpost: PostsType = {
-        id: new Date().getTime(),
-        message: State.newPost,
-        likesCount: 0
+        switch (action.type) {
+            case "ADD_POST":
+                const newpost: PostsType = {
+                    id: new Date().getTime(),
+                    message: this._state.newPost,
+                    likesCount: 0
+                }
+                if (this._state.newPost) {
+                    this._state.posts.push(newpost)
+                    this._rerenderEntireThree()
+                    this._state.newPost = ""
+                }
+                break
+            case "UPDATE_POST":
+                this._state.newPost = action.updText
+                this._rerenderEntireThree()
+                break
+        }
     }
-    if (State.newPost) {
-        State.posts.push(newpost)
-        rerenderEntireThree(State)
-        State.newPost = ""
-
-    }
-}
-
-export const updPostMessage = (updText: string) => {
-    State.newPost = updText
-    rerenderEntireThree(State)
 
 }
 
-export const subscribe=(observe:any)=>{
-rerenderEntireThree=observe
-}
+
+export const addPostActionCreator=()=>({type: ADD_POST} as const)
+
+
+export const UpdPostActionCreator=(newtext:string)=>({
+        type: UPDATE_POST,
+        updText: (newtext)
+    } as const)
+

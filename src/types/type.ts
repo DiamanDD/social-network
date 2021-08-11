@@ -1,5 +1,7 @@
 // типизация
 
+import {addPostActionCreator, UpdPostActionCreator} from "../redux/State";
+
 export type PostsType = {
     id: number
     message: string
@@ -32,5 +34,22 @@ export type StateTypeElement = {
 
 
 export type StateType = {
-    State: StateTypeElement
+    store: storeType
 }
+
+export type AddPostType=ReturnType<typeof addPostActionCreator>
+
+export  type UpdPostType=ReturnType<typeof UpdPostActionCreator>
+
+export type ActionsType=AddPostType | UpdPostType
+
+export type storeType= {
+    _state:StateTypeElement
+
+    subscribe:(observe:()=>void)=>void
+    _rerenderEntireThree:()=>void
+    getState:()=>StateTypeElement
+    dispatch:(action:ActionsType)=>void
+
+}
+

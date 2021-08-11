@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 import "./App.css";
 import {Header} from "./component/Header/Header";
@@ -12,10 +12,11 @@ import {Musics} from "./component/Musics/Musics";
 import {Settings} from "./component/Settings/Settings";
 import {StateType} from "./types/type";
 
-import {addPostMessage, updPostMessage} from "./redux/State";
 
 
-const App: React.FC<StateType> = (State) => {
+
+
+const App: React.FC<StateType> = (state) => {
 
     return (
         <BrowserRouter>
@@ -28,14 +29,13 @@ const App: React.FC<StateType> = (State) => {
                     <Route path={"/profile"}
                            render={() => <Profile
 
-                               posts={State.State.posts}
-                               addPost={addPostMessage}
-                               updPost={updPostMessage}
-                               newPost={State.State.newPost}
+                               posts={state.store._state.posts}
+                               dispatch={state.store.dispatch.bind(state.store)}
+                               newPost={state.store._state.newPost}
 
                            />}/>
                     <Route path={"/dialogs"} render={() => <Dialogs
-                        profilePage={State.State.profilePage}/>}/>
+                        profilePage={state.store._state.profilePage}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/musics"} component={Musics}/>
                     <Route path={"/settings"} component={Settings}/>

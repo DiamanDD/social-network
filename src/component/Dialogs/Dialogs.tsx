@@ -5,6 +5,7 @@ import {DialogItems} from "./DialogsItems/DialogItems";
 import {profilePageTypeElevents} from "../../types/type";
 
 
+
 type PropsType={
     profilePage:profilePageTypeElevents
 }
@@ -34,6 +35,7 @@ export const Dialogs= (props:PropsType) => {
 
                 {dialogsElements}
                 {messagesElements}
+
             </div>
         </div>
     )

@@ -4,14 +4,14 @@ import s from "./Profile.module.css"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 
 import {MyPosts} from "./MyPosts/MyPosts";
-import {PostsType} from "../../types/type";
-import {updPostMessage} from "../../redux/State";
+import {ActionsType, PostsType} from "../../types/type";
+
 
 export type PostsPropsType = {
     posts: PostsType[]
-    addPost: () => void
-    updPost:(updText:string)=>void
+
     newPost:string
+    dispatch:(action:ActionsType)=>void
 
 }
 
@@ -22,8 +22,8 @@ export const Profile = (props: PostsPropsType) => {
             <ProfileInfo/>
             <MyPosts
                 posts={props.posts}
-                addPost={props.addPost}
-                updPost={updPostMessage}
+                dispatch={props.dispatch}
+
                 newPost={props.newPost}
             />
             {/*<MyPosts posts={props.posts} />*/}
