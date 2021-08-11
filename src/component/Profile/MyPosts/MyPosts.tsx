@@ -5,7 +5,6 @@ import {Posts} from "./Posts/Posts";
 import {addPostActionCreator, UpdPostActionCreator} from "../../../redux/dialogs-reducer";
 
 
-
 export const MyPosts = (props: PostsPropsType) => {
 
     let postElements = props.posts.map((p) => <Posts

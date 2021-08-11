@@ -6,7 +6,6 @@ type UserProfileProps = {
     id: number
     route: number
     userName: string
-
 }
 export const DialogItems = (user: UserProfileProps) => {
     return (

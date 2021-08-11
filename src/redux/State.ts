@@ -48,19 +48,3 @@ export const store:storeType={
     }
 
 }
-
-//
-// export const addPostActionCreator=()=>({type: ADD_POST} as const)
-//
-//
-// export const UpdPostActionCreator=(newtext:string)=>({
-//         type: UPDATE_POST,
-//         updText: (newtext)
-//     } as const)
-//
-// export const UpdMessageActionCreator=(updMessage:string)=>({
-//         type: UPDATE_MESSAGE,
-//      updMessage:updMessage
-//     } as const)
-//
-// export const addNEwMessageActionCreator=()=>({type: ADD_MESSAGE} as const)

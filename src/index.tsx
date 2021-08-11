@@ -5,11 +5,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import {StateTypeElement} from "./types/type";
 
 
-
- let  rerenderEntireThree = () => {
+let rerenderEntireThree = () => {
     ReactDOM.render(
         <React.StrictMode>
 

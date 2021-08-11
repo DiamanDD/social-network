@@ -7,17 +7,13 @@ import {ChangeEvent} from "react";
 import {addNEwMessageActionCreator, UpdMessageActionCreator} from "../../redux/profile-reducer";
 
 
-
 type PropsType = {
     profilePage: profilePageTypeElevents
     dispatch: (action: ActionsType) => void
 }
 
-
 export const Dialogs = (props: PropsType) => {
-
     let dialogsElements = props.profilePage.profile.map((user) => {
-
         return (
 
             <DialogItems
@@ -25,7 +21,6 @@ export const Dialogs = (props: PropsType) => {
                 id={user.id}
                 route={user.id}/>
         )
-
     })
     let messagesElements = props.profilePage.message.map(
         (message) =>
@@ -45,7 +40,7 @@ export const Dialogs = (props: PropsType) => {
                 <div className={s.messageItems}>{messagesElements}</div>
                 <div>
                     <div>
-                        <textarea onChange={onChangeHangler} >{props.profilePage.newMessage}</textarea>
+                        <textarea onChange={onChangeHangler}>{props.profilePage.newMessage}</textarea>
                     </div>
                     <div>
                         <button onClick={addNewMessage}>Send</button>

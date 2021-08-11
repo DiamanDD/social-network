@@ -13,12 +13,9 @@ import {Settings} from "./component/Settings/Settings";
 import {StateType} from "./types/type";
 
 
-
-
-
 const App: React.FC<StateType> = (state) => {
 
-    const{_state,dispatch}=state.store
+    const {_state, dispatch} = state.store
 
     return (
         <BrowserRouter>
@@ -27,10 +24,9 @@ const App: React.FC<StateType> = (state) => {
                 <Header/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-                    {/*<Route path={"/profile"} component={Profile}/>*/}
+
                     <Route path={"/profile"}
                            render={() => <Profile
-
                                posts={_state.posts}
                                dispatch={dispatch.bind(state.store)}
                                newPost={_state.newPost}

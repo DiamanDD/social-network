@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./Profile.module.css"
 
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
@@ -10,8 +10,8 @@ import {ActionsType, PostsType} from "../../types/type";
 export type PostsPropsType = {
     posts: PostsType[]
 
-    newPost:string
-    dispatch:(action:ActionsType)=>void
+    newPost: string
+    dispatch: (action: ActionsType) => void
 
 }
 
@@ -23,10 +23,9 @@ export const Profile = (props: PostsPropsType) => {
             <MyPosts
                 posts={props.posts}
                 dispatch={props.dispatch}
-
                 newPost={props.newPost}
             />
-            {/*<MyPosts posts={props.posts} />*/}
+
 
         </div>
     )

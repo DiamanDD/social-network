@@ -3,16 +3,12 @@ import {ActionsType, PostsType, StateTypeElement} from "../types/type";
 const ADD_POST = "ADD_POST";
 const UPDATE_POST = "UPDATE_POST";
 
-export const addPostActionCreator=()=>({type: ADD_POST} as const)
-
-
-export const UpdPostActionCreator=(newtext:string)=>({
+export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const UpdPostActionCreator = (newtext: string) => ({
     type: UPDATE_POST,
     updText: (newtext)
 } as const)
-
-
-export const dialogsReducer=(state:StateTypeElement,action:ActionsType)=>{
+export const dialogsReducer = (state: StateTypeElement, action: ActionsType) => {
     switch (action.type) {
         case ADD_POST:
             const newpost: PostsType = {
@@ -22,7 +18,7 @@ export const dialogsReducer=(state:StateTypeElement,action:ActionsType)=>{
             }
             if (state.newPost) {
                 state.posts.push(newpost)
-                 state.newPost = ""
+                state.newPost = ""
             }
             return state
         case UPDATE_POST:
@@ -32,5 +28,5 @@ export const dialogsReducer=(state:StateTypeElement,action:ActionsType)=>{
         default:
             return state
 
-}
+    }
 }
