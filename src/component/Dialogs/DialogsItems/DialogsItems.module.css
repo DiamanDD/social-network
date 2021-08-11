@@ -1,19 +1,16 @@
-.dialogs{
-    display: grid;
-    grid-template-columns: 2fr 10fr;
 
 
-}
-.dialogsItems{
-    padding: 10px;
-}
 .dialogsItems .active{
     color:green;
 }
 .dialog a{
-    border: 1px solid black;
+
+
     text-decoration: none;
     color:inherit;
+}
+.dialog{
+    padding: 10px;
 }
 
 

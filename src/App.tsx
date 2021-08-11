@@ -18,6 +18,8 @@ import {StateType} from "./types/type";
 
 const App: React.FC<StateType> = (state) => {
 
+    const{_state,dispatch}=state.store
+
     return (
         <BrowserRouter>
 
@@ -29,13 +31,13 @@ const App: React.FC<StateType> = (state) => {
                     <Route path={"/profile"}
                            render={() => <Profile
 
-                               posts={state.store._state.posts}
-                               dispatch={state.store.dispatch.bind(state.store)}
-                               newPost={state.store._state.newPost}
+                               posts={_state.posts}
+                               dispatch={dispatch.bind(state.store)}
+                               newPost={_state.newPost}
 
                            />}/>
                     <Route path={"/dialogs"} render={() => <Dialogs
-                        profilePage={state.store._state.profilePage}/>}/>
+                        profilePage={_state.profilePage} dispatch={dispatch.bind(state.store)}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/musics"} component={Musics}/>
                     <Route path={"/settings"} component={Settings}/>

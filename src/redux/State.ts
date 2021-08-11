@@ -1,6 +1,6 @@
-import {AddPostType, PostsType, storeType, UpdPostType} from "../types/type";
-const ADD_POST = "ADD_POST";
-const UPDATE_POST = "UPDATE_POST";
+import {storeType} from "../types/type";
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
 
 export const store:storeType={
     _state:{
@@ -15,7 +15,8 @@ export const store:storeType={
                 {id: 1, message: "hallo1"},
                 {id: 2, message: "hallo2"},
                 {id: 3, message: "hallo3"}
-            ]
+            ],
+            newMessage:"1",
 
 
         },
@@ -41,35 +42,25 @@ export const store:storeType={
         return this._state
     },
     dispatch(action){
-
-        switch (action.type) {
-            case "ADD_POST":
-                const newpost: PostsType = {
-                    id: new Date().getTime(),
-                    message: this._state.newPost,
-                    likesCount: 0
-                }
-                if (this._state.newPost) {
-                    this._state.posts.push(newpost)
-                    this._rerenderEntireThree()
-                    this._state.newPost = ""
-                }
-                break
-            case "UPDATE_POST":
-                this._state.newPost = action.updText
-                this._rerenderEntireThree()
-                break
-        }
+        this._state.profilePage =  profileReducer(this._state.profilePage,action)
+        this._state=dialogsReducer(this._state,action)
+        this._rerenderEntireThree()
     }
 
 }
 
-
-export const addPostActionCreator=()=>({type: ADD_POST} as const)
-
-
-export const UpdPostActionCreator=(newtext:string)=>({
-        type: UPDATE_POST,
-        updText: (newtext)
-    } as const)
-
+//
+// export const addPostActionCreator=()=>({type: ADD_POST} as const)
+//
+//
+// export const UpdPostActionCreator=(newtext:string)=>({
+//         type: UPDATE_POST,
+//         updText: (newtext)
+//     } as const)
+//
+// export const UpdMessageActionCreator=(updMessage:string)=>({
+//         type: UPDATE_MESSAGE,
+//      updMessage:updMessage
+//     } as const)
+//
+// export const addNEwMessageActionCreator=()=>({type: ADD_MESSAGE} as const)

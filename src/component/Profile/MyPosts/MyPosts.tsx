@@ -2,7 +2,8 @@ import React, {ChangeEvent} from "react";
 import {PostsPropsType} from "../Profile";
 
 import {Posts} from "./Posts/Posts";
-import {addPostActionCreator, UpdPostActionCreator} from "../../../redux/State";
+import {addPostActionCreator, UpdPostActionCreator} from "../../../redux/dialogs-reducer";
+
 
 
 export const MyPosts = (props: PostsPropsType) => {

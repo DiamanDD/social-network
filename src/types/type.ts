@@ -1,6 +1,7 @@
 // типизация
 
-import {addPostActionCreator, UpdPostActionCreator} from "../redux/State";
+import {addNEwMessageActionCreator, UpdMessageActionCreator} from "../redux/profile-reducer";
+import {addPostActionCreator, UpdPostActionCreator} from "../redux/dialogs-reducer";
 
 export type PostsType = {
     id: number
@@ -21,6 +22,7 @@ export type ProfileType = {
 export type profilePageTypeElevents = {
     profile: ProfileType[]
     message: MessageType[]
+    newMessage:string
 
 }
 
@@ -41,11 +43,14 @@ export type AddPostType=ReturnType<typeof addPostActionCreator>
 
 export  type UpdPostType=ReturnType<typeof UpdPostActionCreator>
 
-export type ActionsType=AddPostType | UpdPostType
+export  type UpMessageType=ReturnType<typeof UpdMessageActionCreator>
+
+export type AddNewMessageType=ReturnType<typeof addNEwMessageActionCreator>
+
+export type ActionsType=AddPostType | UpdPostType | UpMessageType | AddNewMessageType
 
 export type storeType= {
     _state:StateTypeElement
-
     subscribe:(observe:()=>void)=>void
     _rerenderEntireThree:()=>void
     getState:()=>StateTypeElement
