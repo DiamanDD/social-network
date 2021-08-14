@@ -1,9 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {PostsPropsType} from "../Profile";
-
 import {Posts} from "./Posts/Posts";
-import {addPostActionCreator, UpdPostActionCreator} from "../../../redux/dialogs-reducer";
-
 
 export const MyPosts = (props: PostsPropsType) => {
 
@@ -16,14 +13,15 @@ export const MyPosts = (props: PostsPropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const onclickAddPost = () => {
-        props.dispatch(addPostActionCreator())
+        props.onclickAddPost()
+
     }
 
     const onChangePostElements = (e: ChangeEvent<HTMLTextAreaElement>) => {
 
-        return props.dispatch(UpdPostActionCreator(e.currentTarget.value))
-    }
+        return props.onChangePostElements(e.currentTarget.value)
 
+    }
     return (
         <div>
             <div>
@@ -32,15 +30,11 @@ export const MyPosts = (props: PostsPropsType) => {
                     <textarea ref={newPostElement}
                               onChange={onChangePostElements}
                               value={props.newPost}>
-
                     </textarea>
                     <button onClick={onclickAddPost}>ADD Post</button>
-
                 </div>
             </div>
-
             {postElements}
-
 
         </div>
 

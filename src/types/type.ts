@@ -2,6 +2,7 @@
 
 import {addNEwMessageActionCreator, UpdMessageActionCreator} from "../redux/profile-reducer";
 import {addPostActionCreator, UpdPostActionCreator} from "../redux/dialogs-reducer";
+import {reduserType} from "../redux/redux-store";
 
 export type PostsType = {
     id: number
@@ -35,8 +36,10 @@ export type StateTypeElement = {
 }
 
 
-export type StateType = {
-    store: storeType
+export type AppStateType = {
+    store: reduserType
+    dispatch:any
+    store1:any
 }
 
 export type AddPostType=ReturnType<typeof addPostActionCreator>
@@ -48,13 +51,12 @@ export  type UpMessageType=ReturnType<typeof UpdMessageActionCreator>
 export type AddNewMessageType=ReturnType<typeof addNEwMessageActionCreator>
 
 export type ActionsType=AddPostType | UpdPostType | UpMessageType | AddNewMessageType
-
-export type storeType= {
-    _state:StateTypeElement
-    subscribe:(observe:()=>void)=>void
-    _rerenderEntireThree:()=>void
-    getState:()=>StateTypeElement
-    dispatch:(action:ActionsType)=>void
-
-}
-
+//
+// export type storeType= {
+//     _state:StateTypeElement
+//     subscribe:(observe:()=>void)=>void
+//     _rerenderEntireThree:()=>void
+//     getState:()=>StateTypeElement
+//     dispatch:(action:ActionsType)=>void
+//
+// }

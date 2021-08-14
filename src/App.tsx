@@ -1,21 +1,17 @@
 import React from "react";
-
 import "./App.css";
 import {Header} from "./component/Header/Header";
 import {NavBar} from "./component/NavBar/NavBar";
-import {Profile} from "./component/Profile/Profile";
-import {Dialogs} from "./component/Dialogs/Dialogs";
-
 import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./component/News/News";
 import {Musics} from "./component/Musics/Musics";
 import {Settings} from "./component/Settings/Settings";
-import {StateType} from "./types/type";
+import {AppStateType} from "./types/type";
+import {DialogsContainer} from "./component/Dialogs/DialogsContainer";
+import {ProfileContainer} from "./component/Profile/ProfileContainer";
 
 
-const App: React.FC<StateType> = (state) => {
-
-    const {_state, dispatch} = state.store
+const App: React.FC<AppStateType> = (state) => {
 
     return (
         <BrowserRouter>
@@ -24,16 +20,12 @@ const App: React.FC<StateType> = (state) => {
                 <Header/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-
                     <Route path={"/profile"}
-                           render={() => <Profile
-                               posts={_state.posts}
-                               dispatch={dispatch.bind(state.store)}
-                               newPost={_state.newPost}
-
-                           />}/>
-                    <Route path={"/dialogs"} render={() => <Dialogs
-                        profilePage={_state.profilePage} dispatch={dispatch.bind(state.store)}/>}/>
+                           render={() => <ProfileContainer store={state.store1} />}/>
+                    <Route
+                        path={"/dialogs"}
+                        render={() => <DialogsContainer store={state.store1}
+                    />}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/musics"} component={Musics}/>
                     <Route path={"/settings"} component={Settings}/>

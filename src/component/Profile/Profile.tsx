@@ -1,32 +1,27 @@
 import React from "react";
-import s from "./Profile.module.css"
-
+import style from "./Profile.module.css"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-
 import {MyPosts} from "./MyPosts/MyPosts";
-import {ActionsType, PostsType} from "../../types/type";
-
+import {PostsType} from "../../types/type";
 
 export type PostsPropsType = {
     posts: PostsType[]
-
     newPost: string
-    dispatch: (action: ActionsType) => void
+    onclickAddPost: () => void
+    onChangePostElements: (body: string) => void
 
 }
-
 export const Profile = (props: PostsPropsType) => {
 
     return (
-        <div className={s.content}>
+        <div className={style.content}>
             <ProfileInfo/>
             <MyPosts
                 posts={props.posts}
-                dispatch={props.dispatch}
                 newPost={props.newPost}
+                onclickAddPost={props.onclickAddPost}
+                onChangePostElements={props.onChangePostElements}
             />
-
-
         </div>
     )
 }
