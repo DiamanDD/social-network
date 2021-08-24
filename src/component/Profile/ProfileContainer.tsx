@@ -1,26 +1,39 @@
-import React from "react";
 import {Profile} from "./Profile";
-import {Store} from "redux";
 import {addPostActionCreator, UpdPostActionCreator} from "../../redux/dialogs-reducer";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {PostsType} from "../../types/type";
+import {Dispatch} from "redux";
 
-export type PostsPropsType = {
-    store: Store
+
+export type mapStateToPropsType = {
+
+    posts: PostsType[]
+    newPost: string
 }
-export const ProfileContainer = (props: PostsPropsType) => {
-    let state = props.store.getState()
-    const onclickAddPost = () => {
-        props.store.dispatch(addPostActionCreator())
-    }
-    const onChangePostElements = (body: string) => {
-        return props.store.dispatch(UpdPostActionCreator(body))
-    }
-    return (
-        <>
-            <Profile
-                posts={state.dialogsReducer.profilePage.posts}
-                newPost={state.dialogsReducer.profilePage.newPost}
-                onclickAddPost={onclickAddPost}
-                onChangePostElements={onChangePostElements}/>
-        </>
-    )
+type mapDispatchToPropsType = {
+    onclickAddPost: () => void
+    onChangePostElements: (body: string) => void
 }
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+
+
+    return {
+        posts: state.dialogsReducer.profilePage.posts,
+        newPost: state.dialogsReducer.profilePage.newPost
+
+    }
+}
+let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+
+    return {
+        onclickAddPost: () => {
+            dispatch(addPostActionCreator())
+        },
+        onChangePostElements: (body: string) => {
+            dispatch(UpdPostActionCreator(body))
+        }
+
+    }
+}
+export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);

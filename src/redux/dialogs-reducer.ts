@@ -6,7 +6,7 @@ const UPDATE_POST = "UPDATE_POST";
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
 export const UpdPostActionCreator = (newtext: string) => ({
     type: UPDATE_POST,
-    updText: (newtext)
+    updText: newtext
 } as const)
 
 const initialState = {
@@ -26,21 +26,46 @@ const initialState = {
 export const dialogsReducer = (state = initialState, action: ActionsType) => {
 
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
+            let stateCopy = {
+                ...state,
+                profilePage: {
+                    ...state.profilePage,
+                    newPost: state.profilePage.newPost
+                }
+            }
+
             const newpost: PostsType = {
                 id: new Date().getTime(),
                 message: state.profilePage.newPost,
                 likesCount: 0
             }
-            if (state.profilePage.newPost) {
-                state.profilePage.posts.push(newpost)
-                state.profilePage.newPost = ""
-            }
-            return state
-        case UPDATE_POST:
-            state.profilePage.newPost = action.updText
+            if (stateCopy.profilePage.newPost) {
+                let stateCopy = {
+                    ...state,
+                    profilePage: {
+                        ...state.profilePage,
+                        posts: [newpost, ...state.profilePage.posts
+                        ]
+                    }
+                }
 
-            return state
+                stateCopy.profilePage.newPost = ""
+                return stateCopy
+            }
+            return stateCopy
+        }
+        case UPDATE_POST: {
+
+
+            return {
+                ...state,
+                profilePage: {
+                    ...state.profilePage,
+                    newPost:action.updText
+                }
+            }
+        }
         default:
             return state
 

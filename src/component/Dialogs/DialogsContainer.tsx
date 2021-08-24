@@ -1,33 +1,47 @@
-import React from "react";
+
 import {addNEwMessageActionCreator, UpdMessageActionCreator} from "../../redux/profile-reducer";
 import {Dialogs} from "./Dialogs";
+import {connect} from "react-redux";
+import {MessageType, ProfileType} from "../../types/type";
+import {AppStateType} from "../../redux/redux-store";
+import {Dispatch} from "redux";
 
-type PropsType = {
-    store: any
+type mapStateToPropsType = {
+    profile: ProfileType[]
+    message: MessageType[]
+    newMessage: string
 
 }
-export const DialogsContainer = (props: PropsType) => {
-
-    let state = props.store.getState()
-    let {message, newMessage, profile} = state.profileReducer.dialogsPage
-
-    const onChangeHangler = (body: string) => {
-        props.store.dispatch(UpdMessageActionCreator(body))
-    }
-    const addNewMessage = () => {
-        props.store.dispatch(addNEwMessageActionCreator())
-    }
-
-
-    return (
-        <div>
-            <Dialogs
-                onChangeHangler={onChangeHangler}
-                addNewMessage={addNewMessage}
-                message={message}
-                newMessage={newMessage}
-                profile={profile}
-            />
-        </div>
-    )
+type mapDispatchToPropsType = {
+    addNewMessage: () => void
+    onChangeHangler: (body: string) => void
 }
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+
+    return {
+
+        message: state.profileReducer.dialogsPage.message,
+        newMessage: state.profileReducer.dialogsPage.newMessage,
+        profile: state.profileReducer.dialogsPage.profile
+
+
+    }
+}
+let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+
+    return {
+        addNewMessage: () => {
+
+            dispatch(addNEwMessageActionCreator())
+
+        },
+        onChangeHangler: (body: string) => {
+
+            dispatch(UpdMessageActionCreator(body))
+        }
+
+    }
+}
+
+
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);

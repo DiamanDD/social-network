@@ -14,7 +14,7 @@ type PropsType = {
 }
 
 export const Dialogs = (props: PropsType) => {
-
+    console.log(props)
     let dialogsElements = props.profile.map((user) => {
 
         return (

@@ -3,17 +3,15 @@ import {ActionsType, MessageType} from "../types/type";
 const ADD_MESSAGE = "ADD_MESSAGE";
 const UPDATE_MESSAGE = "UPDATE_MESSAGE";
 
-
 export const UpdMessageActionCreator = (updMessage: string) => ({
     type: UPDATE_MESSAGE,
     updMessage: updMessage
 } as const)
 
-
 const initialState = {
     dialogsPage: {
         profile: [
-            {id: 1, userName: "Ivan"},
+            {id: 1, userName: "IvanIvanIvanIvan"},
             {id: 2, userName: "Ivan2"},
             {id: 3, userName: "Ivan3"}
         ],
@@ -31,22 +29,46 @@ export const profileReducer = (state = initialState, action: ActionsType) => {
 
     switch (action.type) {
 
-        case UPDATE_MESSAGE:
-            state.dialogsPage.newMessage = action.updMessage
-
-            return state
-        case ADD_MESSAGE:
+        case UPDATE_MESSAGE: {
+            debugger
+            return {
+                ...state,
+                dialogsPage: {
+                    ...state.dialogsPage,
+                    newMessage: action.updMessage,
+                }
+            }
+        }
+        case ADD_MESSAGE: {
+            let stateCopy = {
+                ...state,
+                dialogsPage: {
+                    ...state.dialogsPage,
+                    newMessage: state.dialogsPage.newMessage
+                }
+            }
             const newMessagePost: MessageType = {
                 id: new Date().getTime(),
-                message: state.dialogsPage.newMessage
+                message: stateCopy.dialogsPage.newMessage
 
             }
-            if (state.dialogsPage.newMessage) {
-                state.dialogsPage.message.push(newMessagePost)
 
-                state.dialogsPage.newMessage = ""
+
+            if (stateCopy.dialogsPage.newMessage) {
+                stateCopy = {
+                    ...state,
+                    dialogsPage: {
+                        ...state.dialogsPage, message: [...state.dialogsPage.message, newMessagePost]
+                    }
+                }
+
+
+                stateCopy.dialogsPage.newMessage = ""
+                console.log(state, stateCopy)
+
             }
-            return state
+            return stateCopy
+        }
         default:
             return state
     }
