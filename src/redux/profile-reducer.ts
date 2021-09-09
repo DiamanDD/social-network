@@ -1,11 +1,16 @@
 import {ActionsType, MessageType} from "../types/type";
-
 const ADD_MESSAGE = "ADD_MESSAGE";
 const UPDATE_MESSAGE = "UPDATE_MESSAGE";
+const SET_PROFILE_INFO = "SET_PROFILE_INFO"
 
 export const UpdMessageActionCreator = (updMessage: string) => ({
     type: UPDATE_MESSAGE,
     updMessage: updMessage
+} as const)
+export const setProfileInfo = (profileinfo: any) => ({
+    type: SET_PROFILE_INFO,
+    profileinfo
+
 } as const)
 
 const initialState = {
@@ -22,10 +27,15 @@ const initialState = {
             {id: 3, message: "hallo3"}
         ],
         newMessage: "5",
-    }
+    },
+    profiliInfo: null
 }
+
+type InitialStateType = typeof initialState
+
+
 export const addNEwMessageActionCreator = () => ({type: ADD_MESSAGE} as const)
-export const profileReducer = (state = initialState, action: ActionsType) => {
+export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
 
@@ -61,14 +71,17 @@ export const profileReducer = (state = initialState, action: ActionsType) => {
                         ...state.dialogsPage, message: [...state.dialogsPage.message, newMessagePost]
                     }
                 }
-
-
                 stateCopy.dialogsPage.newMessage = ""
-                console.log(state, stateCopy)
 
             }
+
             return stateCopy
         }
+        case SET_PROFILE_INFO:
+
+            return {
+                ...state, profiliInfo: action.profileinfo
+            }
         default:
             return state
     }

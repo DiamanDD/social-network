@@ -1,15 +1,23 @@
 import React from "react";
+type ProfileInfoType={
 
-export const ProfileInfo = () => {
+    profiliInfo:any
+}
+
+export const ProfileInfo = (props:ProfileInfoType) => {
+
+
     return (
         <>
             <div>
-                <img alt="ava"
-                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=753&q=80"/>
+                <img alt={`${props.profiliInfo.fullName}`}
+                    src={`${props.profiliInfo.photos.large}`}/>
             </div>
             <div>
                 <div>
-                  ava+desctiption
+                    {props.profiliInfo.aboutMe}
+                </div><div>
+                    {props.profiliInfo.fullName}
                 </div>
 
             </div>

@@ -1,8 +1,16 @@
 import React, {ChangeEvent} from "react";
-import {PostsPropsType} from "../Profile";
 import {Posts} from "./Posts/Posts";
+import {PostsType} from "../../../types/type";
 
-export const MyPosts = (props: PostsPropsType) => {
+
+type MyPostsType = {
+    posts: PostsType[]
+    newPost: string
+    addPost: () => void
+    UpdPost: (body: string) => void
+}
+
+export const MyPosts = (props: MyPostsType) => {
 
     let postElements = props.posts.map((p) => <Posts
         key={p.id}
@@ -13,13 +21,13 @@ export const MyPosts = (props: PostsPropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const onclickAddPost = () => {
-        props.onclickAddPost()
+        props.addPost()
 
     }
 
     const onChangePostElements = (e: ChangeEvent<HTMLTextAreaElement>) => {
 
-        return props.onChangePostElements(e.currentTarget.value)
+        return props.UpdPost(e.currentTarget.value)
 
     }
     return (

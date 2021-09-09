@@ -3,8 +3,8 @@ import {ActionsType, PostsType} from "../types/type";
 const ADD_POST = "ADD_POST";
 const UPDATE_POST = "UPDATE_POST";
 
-export const addPostActionCreator = () => ({type: ADD_POST} as const)
-export const UpdPostActionCreator = (newtext: string) => ({
+export const addPost = () => ({type: ADD_POST} as const)
+export const UpdPost = (newtext: string) => ({
     type: UPDATE_POST,
     updText: newtext
 } as const)
@@ -23,7 +23,9 @@ const initialState = {
         newPost: "11111"
     }
 }
-export const dialogsReducer = (state = initialState, action: ActionsType) => {
+type initialStateType=typeof initialState
+
+export const dialogsReducer = (state = initialState, action: ActionsType):initialStateType => {
 
     switch (action.type) {
         case ADD_POST: {
@@ -34,7 +36,6 @@ export const dialogsReducer = (state = initialState, action: ActionsType) => {
                     newPost: state.profilePage.newPost
                 }
             }
-
             const newpost: PostsType = {
                 id: new Date().getTime(),
                 message: state.profilePage.newPost,
@@ -56,8 +57,6 @@ export const dialogsReducer = (state = initialState, action: ActionsType) => {
             return stateCopy
         }
         case UPDATE_POST: {
-
-
             return {
                 ...state,
                 profilePage: {
