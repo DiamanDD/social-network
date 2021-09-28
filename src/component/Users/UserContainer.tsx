@@ -1,8 +1,12 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
+    getUserThunkCreator,
+    SelectPageThunkCreator,
     setFollowStatus,
     setSelectedPage,
+    setToggleFollowing, setToggleFollowingThunkCreator,
+    setToggleUnfollowingThunkCreator,
     setTotalCountUser,
     setUnfollowStatus,
     setUsers,
@@ -10,9 +14,9 @@ import {
 } from "../../redux/users-reducer";
 
 import React from "react";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../../Common/Preloader/Preloader";
+import {Redirect} from "react-router-dom";
 
 type mapStateToPropsType = {
     user2: UserPropsType[]
@@ -20,6 +24,8 @@ type mapStateToPropsType = {
     countUsers: number
     selectedPAge: number
     isFetching: boolean
+    toggleFollowing:string[]
+    isAuth:boolean
 }
 type mapDispatchToProps = {
     setFollowStatus: (id: string) => void
@@ -28,6 +34,12 @@ type mapDispatchToProps = {
     setTotalCountUser: (totalCount: number) => void
     setSelectedPage: (selectedPAgeAT: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    setToggleFollowing: (userId:string,isFetching:boolean) => void
+    getUserThunkCreator: (countUsers: number, selectedPAge: number)=>void
+    SelectPageThunkCreator:(page:number,countUsers:number)=>void
+    setToggleFollowingThunkCreator:(UserId:string)=>void
+    setToggleUnfollowingThunkCreator:(UserId:string)=>void
+
 }
 export type UserPropsType = {
     id: string
@@ -37,33 +49,23 @@ export type UserPropsType = {
     status: string
     countyName: string
     cityName: string
-
-
 }
 
 export class UsersC extends React.Component<USersPropsType> {
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.countUsers}&page=${this.props.selectedPAge}`).then(response => {
-            this.props.setUsers((response.data.items))
-            this.props.setTotalCountUser(response.data.totalCount)
-            this.props.toggleIsFetching(false)
-        })
+        this.props.getUserThunkCreator(this.props.countUsers, this.props.selectedPAge)
     }
 
-    selectPage = (p: number) => {
-        this.props.toggleIsFetching(true)
-        this.props.setSelectedPage(p)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.countUsers}&page=${p}`).then(response => {
-            this.props.setUsers((response.data.items))
-            this.props.toggleIsFetching(false)
-        })
+    selectPage = (page: number) => {
+        this.props.SelectPageThunkCreator(page,this.props.countUsers)
     }
 
     render() {
+
+        if(!this.props.isAuth) return <Redirect to={"/login"}/>
         return (
             <>
-                {
+               {
                     this.props.isFetching
                         ? <Preloader/>
                         : <Users
@@ -74,6 +76,10 @@ export class UsersC extends React.Component<USersPropsType> {
                             setfollowStatus={this.props.setFollowStatus}
                             setUnfollowStatus={this.props.setUnfollowStatus}
                             selectPage={this.selectPage}
+                            setToggleFollowing={this.props.setToggleFollowing}
+                            toggleFollowing={this.props.toggleFollowing}
+                            setToggleFollowingThunkCreator={this.props.setToggleFollowingThunkCreator}
+                            setToggleUnfollowingThunkCreator={this.props.setToggleUnfollowingThunkCreator}
                         />
                 }
             </>
@@ -87,14 +93,22 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     totalCountUSer: state.userReducer.totalCountUSer,
     countUsers: state.userReducer.countUsers,
     selectedPAge: state.userReducer.currentPAge,
-    isFetching: state.userReducer.isFetching
-
+    isFetching: state.userReducer.isFetching,
+    toggleFollowing:state.userReducer.toggleFollowing,
+    isAuth:state.authReducer.isAyth
 })
+
 export const UserContainer = connect(mapStateToProps, {
     setFollowStatus,
     setUnfollowStatus,
     setUsers,
     setTotalCountUser,
     setSelectedPage,
-    toggleIsFetching
+    toggleIsFetching,
+   setToggleFollowing,
+    getUserThunkCreator,
+    SelectPageThunkCreator,
+    setToggleFollowingThunkCreator,
+    setToggleUnfollowingThunkCreator,
+
 })(UsersC);

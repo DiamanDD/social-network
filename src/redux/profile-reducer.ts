@@ -1,9 +1,12 @@
 import {ActionsType, MessageType} from "../types/type";
+import {UserAPI} from "../Api/Api";
+import {getUserThunkCreatorAT} from "./users-reducer";
+
 const ADD_MESSAGE = "ADD_MESSAGE";
 const UPDATE_MESSAGE = "UPDATE_MESSAGE";
 const SET_PROFILE_INFO = "SET_PROFILE_INFO"
 
-export const UpdMessageActionCreator = (updMessage: string) => ({
+export const onChangeHangler = (updMessage: string) => ({
     type: UPDATE_MESSAGE,
     updMessage: updMessage
 } as const)
@@ -34,8 +37,21 @@ const initialState = {
 type InitialStateType = typeof initialState
 
 
-export const addNEwMessageActionCreator = () => ({type: ADD_MESSAGE} as const)
-export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const addNewMessage = () => ({type: ADD_MESSAGE} as const)
+export const setProfileInfoThunkCreator=(UserId:string):getUserThunkCreatorAT=>{
+
+    return        (dispatch)=>{
+
+        UserAPI.GetUser(UserId)
+            .then(data => {
+                if (data) {
+                    dispatch(setProfileInfo(data))
+                }
+            })
+    }
+
+}
+export const profileReducer = (state:InitialStateType = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
 

@@ -4,24 +4,23 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {PostsType} from "../../types/type";
 import React from "react";
-import axios from "axios";
-import {setProfileInfo} from "../../redux/profile-reducer";
-import {RouteComponentProps, withRouter } from "react-router-dom";
+import {setProfileInfo, setProfileInfoThunkCreator} from "../../redux/profile-reducer";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 
 export class ProfileCr extends React.Component<PropsType> {
 
     componentDidMount() {
-
         let UserId = this.props.match.params.usID
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ UserId).then(response => {
-            if (response.data) {
-                this.props.setProfileInfo(response.data)
-            }
-        })
+        if (!UserId) {
+            UserId = "2"
+        }
+        this.props.setProfileInfoThunkCreator(UserId)
+
     }
 
     render() {
+        if(!this.props.isAuth) return <Redirect to={"/login"}/>
 
         return (
             <Profile
@@ -36,68 +35,68 @@ export class ProfileCr extends React.Component<PropsType> {
     }
 }
 
-type PathParamsType = {
+export type PathParamsType = {
     usID: string,
 }
-
 
 
 export type mapStateToPropsType = {
 
     posts: PostsType[]
     newPost: string
-    profileIInfo:profileIInfoType | null
+    profileIInfo: profileIInfoType | null
+    isAuth: boolean
+    AuthId: number | null
+
 }
 
 
-
-
-    type mapDispatchToPropsType = {
+type mapDispatchToPropsType = {
     addPost: () => void
     UpdPost: (body: string) => void
     setProfileInfo: (setProfileInfo: any) => void
+    setProfileInfoThunkCreator: any
 }
-type profileIInfoType={
-    aboutMe:string | null
-    contacts:profileIInfoContactType
-    lookingForAJob:boolean | null
-    lookingForAJobDescription:string | null
-    fullName:string | null
-    userId:number | null
-    photos:profileIInfoPhotosType
+type profileIInfoType = {
+    aboutMe: string | null
+    contacts: profileIInfoContactType
+    lookingForAJob: boolean | null
+    lookingForAJobDescription: string | null
+    fullName: string | null
+    userId: number | null
+    photos: profileIInfoPhotosType
 }
-type profileIInfoContactType={
-    facebook:string | null
+type profileIInfoContactType = {
+    facebook: string | null
     website: string | null
     vk: string | null
     twitter: string | null
     instagram: string | null
     youtube: string | null
     github: string | null
-    mainLink:string | null
+    mainLink: string | null
 }
-type profileIInfoPhotosType={
-    small:string | null
-    lagre:string | null
+type profileIInfoPhotosType = {
+    small: string | null
+    lagre: string | null
 }
-
-
 export type profileType = mapStateToPropsType & mapDispatchToPropsType
 type PropsType = RouteComponentProps<PathParamsType> & profileType
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
-
-
     return {
+
         posts: state.dialogsReducer.profilePage.posts,
         newPost: state.dialogsReducer.profilePage.newPost,
-        profileIInfo:state.profileReducer.profiliInfo
+        profileIInfo: state.profileReducer.profiliInfo,
+        isAuth: state.authReducer.isAyth,
+        AuthId: state.authReducer.id
 
     }
-
-
 }
-
-
- const WithURLDataContainerComponent=withRouter(ProfileCr)
-
-export const ProfileContainer = connect(mapStateToProps, {addPost, UpdPost, setProfileInfo})(WithURLDataContainerComponent);
+const WithURLDataContainerComponent = withRouter(ProfileCr)
+export const ProfileContainer = connect(mapStateToProps, {
+    addPost,
+    UpdPost,
+    setProfileInfo,
+    setProfileInfoThunkCreator
+})(WithURLDataContainerComponent);
