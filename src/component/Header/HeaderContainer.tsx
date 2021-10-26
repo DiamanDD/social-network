@@ -15,7 +15,6 @@ type mapStateToPropsType = {
 
 }
 type mapDispatchToProps = {
-
     setProfileInfo: (setProfileInfo: any) => void
     AuthMeThunkCreator: any
 
@@ -28,6 +27,8 @@ class HeaderContainer extends React.Component<HeaderContainerProps> {
 
         this.props.AuthMeThunkCreator(this.props.id)
 
+
+
     }
 
     render() {
@@ -39,6 +40,7 @@ class HeaderContainer extends React.Component<HeaderContainerProps> {
 
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
+
     id: state.authReducer.id,
     email: state.authReducer.email,
     login: state.authReducer.login,

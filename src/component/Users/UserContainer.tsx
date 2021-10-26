@@ -5,7 +5,8 @@ import {
     SelectPageThunkCreator,
     setFollowStatus,
     setSelectedPage,
-    setToggleFollowing, setToggleFollowingThunkCreator,
+    setToggleFollowing,
+    setToggleFollowingThunkCreator,
     setToggleUnfollowingThunkCreator,
     setTotalCountUser,
     setUnfollowStatus,
@@ -16,7 +17,8 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../Common/Preloader/Preloader";
-import {Redirect} from "react-router-dom";
+import {compose} from "redux";
+import {withAuthRedirectComponent} from "../../hoc/withAuthRedirect";
 
 type mapStateToPropsType = {
     user2: UserPropsType[]
@@ -62,7 +64,7 @@ export class UsersC extends React.Component<USersPropsType> {
 
     render() {
 
-        if(!this.props.isAuth) return <Redirect to={"/login"}/>
+
         return (
             <>
                {
@@ -98,17 +100,27 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     isAuth:state.authReducer.isAyth
 })
 
-export const UserContainer = connect(mapStateToProps, {
+
+
+
+
+
+
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+
     setFollowStatus,
     setUnfollowStatus,
     setUsers,
     setTotalCountUser,
     setSelectedPage,
     toggleIsFetching,
-   setToggleFollowing,
+    setToggleFollowing,
     getUserThunkCreator,
     SelectPageThunkCreator,
     setToggleFollowingThunkCreator,
     setToggleUnfollowingThunkCreator,
 
-})(UsersC);
+}),
+    withAuthRedirectComponent
+)(UsersC)

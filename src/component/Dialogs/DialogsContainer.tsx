@@ -3,6 +3,9 @@ import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {MessageType, ProfileType} from "../../types/type";
 import {AppStateType} from "../../redux/redux-store";
+import React from "react";
+import {withAuthRedirectComponent} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type mapStateToPropsType = {
     profile: ProfileType[]
@@ -23,8 +26,27 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 }
 
 
-export const DialogsContainer = connect(mapStateToProps, {
-    addNewMessage,
-    onChangeHangler
 
-})(Dialogs);
+//  compose(
+//     connect(mapStateToProps, {
+//         addNewMessage,
+//         onChangeHangler
+//
+//     }),
+//     withAuthRedirectComponent
+// )(Dialogs)
+
+// const DialogsContainer = withAuthRedirectComponent(connect(mapStateToProps, {
+//     addNewMessage,
+//     onChangeHangler
+//
+// })(Dialogs));
+export  default compose<React.ComponentType>(
+
+    connect(mapStateToProps, {
+        addNewMessage,
+        onChangeHangler
+
+    }),
+    withAuthRedirectComponent
+)(Dialogs);

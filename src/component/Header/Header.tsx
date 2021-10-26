@@ -11,6 +11,7 @@ type HeaderPropsType={
 export const Header = (props:HeaderPropsType) => {
 
 
+
     return (
         <header className={style.header}>
             <img className={"imgNav"}
@@ -18,10 +19,10 @@ export const Header = (props:HeaderPropsType) => {
             <div className={style.authorized}>
                 {
                     props.isAyth?
-                        <NavLink to={"/profile/2}"}>
+                        <NavLink to={`/profile/${props.id}`}>
                             {props.login}
                         </NavLink>
-                        : <NavLink to={"/mylogin"}>
+                        : <NavLink to={"/login"}>
                         Login
                     </NavLink>
                 }

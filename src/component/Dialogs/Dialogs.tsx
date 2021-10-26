@@ -3,7 +3,6 @@ import s from "./Dialogs.module.css"
 import {Message} from "./Message/Message";
 import {DialogItems} from "./DialogsItems/DialogItems";
 import {MessageType, ProfileType} from "../../types/type";
-import {Redirect} from "react-router-dom";
 
 
 type PropsType = {
@@ -16,7 +15,7 @@ type PropsType = {
 }
 
 export const Dialogs = (props: PropsType) => {
-    if (!props.isAuth) return <Redirect to={"/login"}/>
+
 
     let dialogsElements = props.profile.map((user) => {
 

@@ -1,5 +1,12 @@
 // типизация
-import {addNewMessage, setProfileInfo, onChangeHangler} from "../redux/profile-reducer";
+import {
+    addNewMessage,
+    setProfileInfo,
+    onChangeHangler,
+
+    getProfileStatus,
+    setProfileStatus
+} from "../redux/profile-reducer";
 import {addPost, UpdPost} from "../redux/dialogs-reducer";
 import {
     setFollowStatus,
@@ -45,6 +52,8 @@ export type selectedPAgeAT = ReturnType<typeof setSelectedPage>
 export type toggleISFetchingAT = ReturnType<typeof toggleIsFetching>
 export type toggleFollowingAT = ReturnType<typeof setToggleFollowing>
 export type setProfileInfoAT = ReturnType<typeof setProfileInfo>
+export type getProfileStatusAT = ReturnType<typeof getProfileStatus>
+export type setProfileStatusAT = ReturnType<typeof setProfileStatus>
 export type setUserDataAT = ReturnType<typeof setUserData>
 
 export type ActionsType =
@@ -60,7 +69,9 @@ export type ActionsType =
     toggleISFetchingAT |
     toggleFollowingAT |
     setProfileInfoAT |
-    setUserDataAT
+    setUserDataAT |
+    getProfileStatusAT |
+    setProfileStatusAT
 
 
 

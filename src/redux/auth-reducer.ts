@@ -34,6 +34,7 @@ export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT => {
     return (dispatch) => {
         UserAPI.AuthMe().then(data => {
 
+
             if (data.resultCode === 0) {
                 const {
                     id, login, email
@@ -41,13 +42,16 @@ export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT => {
                 } = data.data
 
                 dispatch(setUserData(id, login, email))
-                UserId = String(UserId)
+                 UserId = String(id)
+
 
                 axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + UserId).then(response => {
                     if (response.data) {
+
                         dispatch(setProfileInfo(response.data))
                     }
                 })
+
 
 
             }

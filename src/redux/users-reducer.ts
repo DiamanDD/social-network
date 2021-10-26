@@ -19,7 +19,8 @@ const initialState: initialStateType = {
     countUsers: 25,
     currentPAge: 1,
     isFetching: false,
-    toggleFollowing: []
+    toggleFollowing: [],
+
 
 }
 
@@ -30,6 +31,7 @@ export type initialStateType = {
     currentPAge: number
     isFetching: boolean
     toggleFollowing: toggleFollowingType[]
+
 }
 type toggleFollowingType = string
 
@@ -69,6 +71,8 @@ export const setToggleFollowing = (userID: string, isFetching: boolean) => ({
 } as const)
 
 export type getUserThunkCreatorAT = ThunkAction<void, AppStateType, unknown, ActionsType>
+export type getStatusThunkCreatorAT = ThunkAction<void, AppStateType, unknown, ActionsType>
+export type updStatusThunkCreatorAT = ThunkAction<void, AppStateType, unknown, ActionsType>
 
 export const getUserThunkCreator = (countUsers: number, selectedPAge: number): getUserThunkCreatorAT => {
 

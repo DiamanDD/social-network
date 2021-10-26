@@ -12,13 +12,16 @@ export type PostsPropsType = {
     UpdPost: (body: string) => void
     setProfileInfo: (setProfileInfo: any) => void
     profiliInfo: any
+    profileStatus:string
+    updStatusThunkCreator:(status:string)=>void
 }
 export const Profile = (props: PostsPropsType) => {
+
     return (
         <div className={style.content}>
-            {props.profiliInfo ? <ProfileInfo
-                profiliInfo={props.profiliInfo}
-            /> : <Preloader/>
+            {props.profiliInfo
+                ? <ProfileInfo profiliInfo={props.profiliInfo } profileStatus={props.profileStatus} updStatusThunkCreator={props.updStatusThunkCreator}/>
+                : <Preloader/>
             }
             <MyPosts
                 posts={props.posts}

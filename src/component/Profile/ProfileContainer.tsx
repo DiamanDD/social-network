@@ -4,23 +4,42 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {PostsType} from "../../types/type";
 import React from "react";
-import {setProfileInfo, setProfileInfoThunkCreator} from "../../redux/profile-reducer";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {
+    getStatusThunkCreator,
+    setProfileInfo,
+    setProfileInfoThunkCreator,
+    updStatusThunkCreator
+} from "../../redux/profile-reducer";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {withAuthRedirectComponent} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 export class ProfileCr extends React.Component<PropsType> {
+    [x: string]: any;
 
     componentDidMount() {
+
+
         let UserId = this.props.match.params.usID
 
         if (!UserId) {
-            UserId = "2"
+            console.log(UserId)
+            UserId = "19596"
+
+            console.log(UserId)
         }
+        console.log(UserId)
         this.props.setProfileInfoThunkCreator(UserId)
+        this.props.getStatusThunkCreator(UserId)
+
+
 
     }
 
     render() {
-        if(!this.props.isAuth) return <Redirect to={"/login"}/>
+
+
+
 
         return (
             <Profile
@@ -30,16 +49,22 @@ export class ProfileCr extends React.Component<PropsType> {
                 UpdPost={this.props.UpdPost}
                 setProfileInfo={this.props.setProfileInfo}
                 profiliInfo={this.props.profileIInfo}
+                profileStatus={this.props.status}
+                updStatusThunkCreator={this.props.updStatusThunkCreator}
+
             />
         );
+
+
+
     }
+
 }
+
 
 export type PathParamsType = {
     usID: string,
 }
-
-
 export type mapStateToPropsType = {
 
     posts: PostsType[]
@@ -47,15 +72,17 @@ export type mapStateToPropsType = {
     profileIInfo: profileIInfoType | null
     isAuth: boolean
     AuthId: number | null
+    status:string
 
 }
-
-
 type mapDispatchToPropsType = {
     addPost: () => void
     UpdPost: (body: string) => void
     setProfileInfo: (setProfileInfo: any) => void
-    setProfileInfoThunkCreator: any
+    setProfileInfoThunkCreator:any
+    getStatusThunkCreator: any
+    updStatusThunkCreator:any
+
 }
 type profileIInfoType = {
     aboutMe: string | null
@@ -89,14 +116,26 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         newPost: state.dialogsReducer.profilePage.newPost,
         profileIInfo: state.profileReducer.profiliInfo,
         isAuth: state.authReducer.isAyth,
-        AuthId: state.authReducer.id
+        AuthId: state.authReducer.id,
+        status: state.profileReducer.status,
+
 
     }
 }
-const WithURLDataContainerComponent = withRouter(ProfileCr)
-export const ProfileContainer = connect(mapStateToProps, {
-    addPost,
-    UpdPost,
-    setProfileInfo,
-    setProfileInfoThunkCreator
-})(WithURLDataContainerComponent);
+
+
+
+
+export default  compose<React.ComponentType>
+    (connect(mapStateToProps, {
+            addPost,
+            UpdPost,
+            setProfileInfo,
+            setProfileInfoThunkCreator,
+            getStatusThunkCreator,
+            updStatusThunkCreator
+
+        }),
+            withAuthRedirectComponent,
+            withRouter
+    )(ProfileCr)

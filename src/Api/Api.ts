@@ -21,6 +21,7 @@ export const UserAPI={
         )
     },
     GetUser (UserId: string) {
+
         return (
             instatce.get(`profile/` + UserId).then(response => response.data)
         )
@@ -43,34 +44,23 @@ export const UserAPI={
 
 }
 
-// export const GetUsers = (countUsers: number = 1, selectedPAge: number = 5) => {
-//     return (
-//         instatce.get(`users?count=${countUsers}&page=${selectedPAge}`
-//         )
-//             .then(response => response.data)
-//     )
-// }
+ export  const profileApi={
+    getStatus(userId:string){
 
-// export const GetUser = (UserId: string) => {
-//     return (
-//         instatce.get(`profile/` + UserId).then(response => response.data)
-//     )
-// }
+        return instatce.get("profile/status/"+userId)
+    },
+     updStatus(status:string){
 
-// export const UnFollowUser = (id: string) => {
-//     return (instatce.delete(`follow/${id}`).then(responce => responce.data)
-//
-//     )
-// }
+        return instatce.put("/profile/status",{"status":status})
+     }
+ }
 
-
-// export const FollowUsr = (id: string) => {
-//     return (instatce.post(`follow/${id}`).then(responce => responce.data)
-//
-//     )
-// }
-//
-// export const AuthMe = () => {
-//     return (instatce.get(`auth/me`).then(responce => responce.data))
-//
-// }
+ export const autorizedApi={
+    login(email:string,password:string,rememberMe:boolean,captcha:boolean){
+            return instatce.post("/auth/login",{
+                email,
+                password,
+                rememberMe,
+                captcha, })
+    }
+ }
