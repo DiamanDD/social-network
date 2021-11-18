@@ -62,5 +62,8 @@ export const UserAPI={
                 password,
                 rememberMe,
                 captcha, })
+    },
+    ulogOut(){
+        return instatce.delete("/auth/login")
     }
  }

@@ -3,15 +3,15 @@ import {profileApi, UserAPI} from "../Api/Api";
 import {getStatusThunkCreatorAT, getUserThunkCreatorAT, updStatusThunkCreatorAT} from "./users-reducer";
 
 const ADD_MESSAGE = "ADD_MESSAGE";
-const UPDATE_MESSAGE = "UPDATE_MESSAGE";
+// const UPDATE_MESSAGE = "UPDATE_MESSAGE";
 const SET_PROFILE_INFO = "SET_PROFILE_INFO"
 const GET_PROFILE_STATUS = "GET_PROFILE_STATUS"
 const SET_PROFILE_STATUS="SET_PROFILE_STATUS"
 
-export const onChangeHangler = (updMessage: string) => ({
-    type: UPDATE_MESSAGE,
-    updMessage: updMessage
-} as const)
+// export const onChangeHangler = (updMessage: string) => ({
+//     type: UPDATE_MESSAGE,
+//     updMessage: updMessage
+// } as const)
 export const setProfileInfo = (profileinfo: any) => ({
     type: SET_PROFILE_INFO,
     profileinfo
@@ -44,7 +44,7 @@ const initialState = {
             {id: 2, message: "hallo2"},
             {id: 3, message: "hallo3"}
         ],
-        newMessage: "5",
+
     },
     profiliInfo: null,
     status:"",
@@ -53,7 +53,7 @@ const initialState = {
 type InitialStateType = typeof initialState
 
 
-export const addNewMessage = () => ({type: ADD_MESSAGE} as const)
+export const addNewMessage = (value:string) => ({type: ADD_MESSAGE, value} as const)
 export const setProfileInfoThunkCreator=(UserId:string):getUserThunkCreatorAT=>{
 
     return        (dispatch)=>{
@@ -92,50 +92,38 @@ export const profileReducer = (state:InitialStateType = initialState, action: Ac
 
     switch (action.type) {
 
-        case SET_PROFILE_STATUS:{
-
-            return {
-                ...state,status:action.status
-            }
-        }
-
-        case UPDATE_MESSAGE: {
-            debugger
-            return {
-                ...state,
-                dialogsPage: {
-                    ...state.dialogsPage,
-                    newMessage: action.updMessage,
-                }
-            }
-        }
+        // case SET_PROFILE_STATUS:{
+        //
+        //     return {
+        //         ...state,status:action.status
+        //     }
+        // }
+        //
+        // case UPDATE_MESSAGE: {
+        //     debugger
+        //     return {
+        //         ...state,
+        //         dialogsPage: {
+        //             ...state.dialogsPage,
+        //
+        //         }
+        //     }
+        // }
         case ADD_MESSAGE: {
-            let stateCopy = {
-                ...state,
-                dialogsPage: {
-                    ...state.dialogsPage,
-                    newMessage: state.dialogsPage.newMessage
-                }
-            }
+
+
             const newMessagePost: MessageType = {
                 id: new Date().getTime(),
-                message: stateCopy.dialogsPage.newMessage
+                message: action.value
 
             }
 
-
-            if (stateCopy.dialogsPage.newMessage) {
-                stateCopy = {
-                    ...state,
-                    dialogsPage: {
-                        ...state.dialogsPage, message: [...state.dialogsPage.message, newMessagePost]
-                    }
+            return {
+                ...state,
+                dialogsPage: {
+                    ...state.dialogsPage, message: [...state.dialogsPage.message, newMessagePost]
                 }
-                stateCopy.dialogsPage.newMessage = ""
-
             }
-
-            return stateCopy
         }
         case SET_PROFILE_INFO:
 

@@ -2,12 +2,10 @@
 import {
     addNewMessage,
     setProfileInfo,
-    onChangeHangler,
-
     getProfileStatus,
     setProfileStatus
 } from "../redux/profile-reducer";
-import {addPost, UpdPost} from "../redux/dialogs-reducer";
+import {addPost} from "../redux/dialogs-reducer";
 import {
     setFollowStatus,
     setSelectedPage,
@@ -35,17 +33,9 @@ export type ProfileType = {
     userName: string
 }
 export type AddPostType = ReturnType<typeof addPost>
-
-export  type UpdPostType = ReturnType<typeof UpdPost>
-
-export  type UpMessageType = ReturnType<typeof onChangeHangler>
-
 export type AddNewMessageType = ReturnType<typeof addNewMessage>
-
 export type FollowUserHAndler = ReturnType<typeof setFollowStatus>
-
 export type UnFollowUserHAndler = ReturnType<typeof setUnfollowStatus>
-
 export type Setusers = ReturnType<typeof setUsers>
 export type setTotalCountUsers = ReturnType<typeof setTotalCountUser>
 export type selectedPAgeAT = ReturnType<typeof setSelectedPage>
@@ -58,8 +48,6 @@ export type setUserDataAT = ReturnType<typeof setUserData>
 
 export type ActionsType =
     AddPostType |
-    UpdPostType |
-    UpMessageType |
     AddNewMessageType |
     FollowUserHAndler |
     UnFollowUserHAndler|

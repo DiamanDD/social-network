@@ -10,7 +10,7 @@ import DialogsContainer from "./component/Dialogs/DialogsContainer";
 import ProfileContainer from "./component/Profile/ProfileContainer";
 import UserContainer from "./component/Users/UserContainer";
 import HeaderContainer from "./component/Header/HeaderContainer";
-import { Login } from "./component/Login/Login";
+import {LoginContainer} from "./component/Login/Login";
 
 
 const App: React.FC = () => {
@@ -32,7 +32,7 @@ const App: React.FC = () => {
                         render={() => <UserContainer/>}/>
                     <Route
                         path={"/login"}
-                        render={() => <Login/>}/>
+                        render={() => <LoginContainer/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/musics"} component={Musics}/>
                     <Route path={"/settings"} component={Settings}/>

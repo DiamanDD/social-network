@@ -7,9 +7,7 @@ import {Preloader} from "../../Common/Preloader/Preloader";
 
 export type PostsPropsType = {
     posts: PostsType[]
-    newPost: string
-    addPost: () => void
-    UpdPost: (body: string) => void
+    addPost: (value:string) => void
     setProfileInfo: (setProfileInfo: any) => void
     profiliInfo: any
     profileStatus:string
@@ -25,9 +23,9 @@ export const Profile = (props: PostsPropsType) => {
             }
             <MyPosts
                 posts={props.posts}
-                newPost={props.newPost}
+
                 addPost={props.addPost}
-                UpdPost={props.UpdPost}
+
             />
         </div>
     )

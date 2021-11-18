@@ -1,6 +1,13 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {autorizedApi} from "../../Api/Api";
+import {autorizedApi, UserAPI} from "../../Api/Api";
+import {connect} from "react-redux";
+import {LoginThunkCreator, setUserData} from "../../redux/auth-reducer";
+import {ActionsType, setUserDataAT} from "../../types/type";
+import { Input } from "../../Common/FormControl/FormControl";
+import {requaired} from "../../Common/FormControl/validator";
+import {Redirect} from "react-router-dom";
+import {AppStateType} from "../../redux/redux-store";
 
 type LoginFormDataType={
     login:string,
@@ -13,8 +20,8 @@ export const LoginForm :React.FC<InjectedFormProps<LoginFormDataType>> = (props)
 
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><Field type={"text"} name={"login"} component={"input"}/></div>
-            <div><Field type={"password"} name={"password"} component={"input"}/></div>
+            <div><Field type={"text"} name={"login"} component={Input} validate={[requaired]} /></div>
+            <div><Field type={"password"} name={"password"} component={Input} validate={[requaired]}/></div>
             <div><Field type={"checkbox"} name={"rememberMe"} component={"input"}/>Remember</div>
             <div>
                 <button>отправить</button>
@@ -26,20 +33,24 @@ const ContactForm = reduxForm<LoginFormDataType>({form: 'login'})(LoginForm)
 
 
 
+type logintype={
+    setUserData:(id:number,login:string,email:string,isAyth:boolean)=>void
+    LoginThunkCreator:(login: string, password: string, rememberme: boolean, captcha: boolean)=>void
+    isAuth:boolean
+}
 
 
-export const Login = ( )=> {
+export const Login = (props:logintype )=> {
+
     const onSubmit=(formData:LoginFormDataType)=>{
 
-        const auth=autorizedApi.login(formData.login,formData.password,false,true)
+        props.LoginThunkCreator(formData.login,formData.password,formData.rememberMe=false,true)
 
-        auth.then((data)=>{
-            if(data.data.resultCode===0){
-                console.log("Куку")
-            }
-            console.log(data)
-        })
     }
+    if(props.isAuth){
+        return <Redirect to={"/profile"}/>
+    }
+
     return (
         <div>
             <h1>Необходимо авторизоваться</h1>
@@ -50,6 +61,22 @@ export const Login = ( )=> {
 
 }
 
+type mstpType={
+    isAuth:boolean
+}
+const mstp=(state: AppStateType):mstpType=>{
+    return{
+        isAuth:state.authReducer.isAyth
+    }
+
+}
+
+
+export const LoginContainer=connect(mstp,{
+    setUserData,
+    LoginThunkCreator
+
+})(Login)
 
 
 
