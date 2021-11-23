@@ -19,7 +19,7 @@ export const Header = (props: HeaderPropsType) => {
             <div className={style.authorized}>
                 {
                     props.isAyth ?
-                        <NavLink to={`/profile/${props.id}`}>
+                        <NavLink  to={`/profile/${props.id}`}>
                             {props.login}
                             <div><button onClick={props.LogOutThunkCreator}>Выход</button></div>
                         </NavLink>

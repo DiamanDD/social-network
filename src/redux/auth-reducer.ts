@@ -3,7 +3,7 @@ import {getUserThunkCreatorAT} from "./users-reducer";
 import {autorizedApi, UserAPI} from "../Api/Api";
 import {setProfileInfo} from "./profile-reducer";
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import {stopSubmit} from "redux-form";
 
 
 const SET_USER_DATA = "SET_USER_DATA";
@@ -32,7 +32,7 @@ export type AuthInitialStateType = {
     isAyth: boolean
 }
 
-export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT => {
+export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT  => {
 
     return (dispatch) => {
         UserAPI.AuthMe().then(data => {
@@ -55,16 +55,21 @@ export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT => {
 
 }
 
-export const LoginThunkCreator = (login: string, password: string, rememberme: boolean, captcha: boolean): getUserThunkCreatorAT => {
+export const LoginThunkCreator = (login: string, password: string, rememberme: boolean, captcha: boolean): getUserThunkCreatorAT  => {
 
     return (dispatch) => {
-        console.log("")
+
         autorizedApi.login(login, password, rememberme = false, captcha = true)
             .then((data) => {
-                console.log(data,data.data.resultCode)
+
                 if (data.data.resultCode === 0) {
                     console.log(data.data.data.userId)
                     dispatch(AuthMeThunkCreator(data.data.data.userId))
+                }
+                else{
+
+                    // @ts-ignore
+                    dispatch(stopSubmit("login",{_error:data.data.messages[0]}))
                 }
             })
     }
@@ -84,7 +89,7 @@ export const LogOutThunkCreator = (): getUserThunkCreatorAT => {
     }
 }
 
-export const authReducer = (state: AuthInitialStateType = initialState, action: setUserDataAT): AuthInitialStateType => {
+export const authReducer = (state: AuthInitialStateType = initialState, action: setUserDataAT ): AuthInitialStateType => {
 
     switch (action.type) {
         case SET_USER_DATA: {

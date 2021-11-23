@@ -21,7 +21,7 @@ export class ProfileCr extends React.Component<PropsType> {
 
         if (!UserId) {
             console.log(UserId)
-            UserId = "19596"
+            UserId = String(this.props.userID)
         }
         this.props.setProfileInfoThunkCreator(UserId)
         this.props.getStatusThunkCreator(UserId)
@@ -51,6 +51,7 @@ export type mapStateToPropsType = {
     isAuth: boolean
     AuthId: number | null
     status:string
+    userID:number |null
 
 }
 type mapDispatchToPropsType = {
@@ -94,7 +95,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         isAuth: state.authReducer.isAyth,
         AuthId: state.authReducer.id,
         status: state.profileReducer.status,
-
+        userID:state.authReducer.id
 
     }
 }

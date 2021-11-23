@@ -1,10 +1,8 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {autorizedApi, UserAPI} from "../../Api/Api";
 import {connect} from "react-redux";
 import {LoginThunkCreator, setUserData} from "../../redux/auth-reducer";
-import {ActionsType, setUserDataAT} from "../../types/type";
-import { Input } from "../../Common/FormControl/FormControl";
+import {Input} from "../../Common/FormControl/FormControl";
 import {requaired} from "../../Common/FormControl/validator";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
@@ -26,6 +24,7 @@ export const LoginForm :React.FC<InjectedFormProps<LoginFormDataType>> = (props)
             <div>
                 <button>отправить</button>
             </div>
+            <div>{props.error}</div>
         </form>)
 }
 

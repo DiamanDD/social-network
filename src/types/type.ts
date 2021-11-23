@@ -16,6 +16,7 @@ import {
     toggleIsFetching
 } from "../redux/users-reducer";
 import {setUserData} from "../redux/auth-reducer";
+import {stopSubmit} from "redux-form";
 
 export type PostsType = {
     id: number
@@ -45,6 +46,7 @@ export type setProfileInfoAT = ReturnType<typeof setProfileInfo>
 export type getProfileStatusAT = ReturnType<typeof getProfileStatus>
 export type setProfileStatusAT = ReturnType<typeof setProfileStatus>
 export type setUserDataAT = ReturnType<typeof setUserData>
+export type stopSubmitAT = ReturnType<typeof stopSubmit>
 
 export type ActionsType =
     AddPostType |
@@ -60,6 +62,8 @@ export type ActionsType =
     setUserDataAT |
     getProfileStatusAT |
     setProfileStatusAT
+    // stopSubmitAT
+
 
 
 
