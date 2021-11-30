@@ -18,7 +18,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         message: state.profileReducer.dialogsPage.message,
         profile: state.profileReducer.dialogsPage.profile,
-        isAuth:state.authReducer.isAyth
+        isAuth:state.authReducer.isAuth
     }
 }
 export  default compose<React.ComponentType>(

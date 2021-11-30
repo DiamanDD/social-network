@@ -11,7 +11,7 @@ type mstpType={
 
 const mstp=(state:AppStateType):mstpType=>{
     return{
-        isAuth:state.authReducer.isAyth
+        isAuth:state.authReducer.isAuth
     }
 
 }
@@ -19,7 +19,7 @@ export  function withAuthRedirectComponent<T>(Component:ComponentType<T>){
 
     const RedirectComponent=(props:mstpType)=>{
         let {isAuth,...restProps}=props
-        console.log(isAuth)
+
         if(!isAuth) return <Redirect to={"/login"}/>
         return <Component  {...restProps as T}/>
     }

@@ -8,7 +8,7 @@ import {
     setToggleFollowing,
     setToggleFollowingThunkCreator,
     setToggleUnfollowingThunkCreator,
-    setTotalCountUser,
+    setTotalUserCount,
     setUnfollowStatus,
     setUsers,
     toggleIsFetching
@@ -18,11 +18,10 @@ import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../Common/Preloader/Preloader";
 import {compose} from "redux";
-import {withAuthRedirectComponent} from "../../hoc/withAuthRedirect";
 
 type mapStateToPropsType = {
-    user2: UserPropsType[]
-    totalCountUSer: number,
+    users: UserPropsType[]
+    totalUserCount: number,
     countUsers: number
     selectedPAge: number
     isFetching: boolean
@@ -33,7 +32,7 @@ type mapDispatchToProps = {
     setFollowStatus: (id: string) => void
     setUnfollowStatus: (id: string) => void
     setUsers: (users: UserPropsType[]) => void
-    setTotalCountUser: (totalCount: number) => void
+    setTotalUserCount: (totalCount: number) => void
     setSelectedPage: (selectedPAgeAT: number) => void
     toggleIsFetching: (isFetching: boolean) => void
     setToggleFollowing: (userId:string,isFetching:boolean) => void
@@ -44,6 +43,9 @@ type mapDispatchToProps = {
 
 }
 export type UserPropsType = {
+    countUsers:number
+    selectedPAge:number
+
     id: string
     photos: any
     followed: boolean
@@ -53,7 +55,7 @@ export type UserPropsType = {
     cityName: string
 }
 
-export class UsersC extends React.Component<USersPropsType> {
+export class UsersC extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.getUserThunkCreator(this.props.countUsers, this.props.selectedPAge)
     }
@@ -71,11 +73,11 @@ export class UsersC extends React.Component<USersPropsType> {
                     this.props.isFetching
                         ? <Preloader/>
                         : <Users
-                            user2={this.props.user2}
-                            totalCountUSer={this.props.totalCountUSer}
+                            users={this.props.users}
+                            totalUserCount={this.props.totalUserCount}
                             countUsers={this.props.countUsers}
                             selectedPAge={this.props.selectedPAge}
-                            setfollowStatus={this.props.setFollowStatus}
+                            setFollowStatus={this.props.setFollowStatus}
                             setUnfollowStatus={this.props.setUnfollowStatus}
                             selectPage={this.selectPage}
                             setToggleFollowing={this.props.setToggleFollowing}
@@ -89,30 +91,23 @@ export class UsersC extends React.Component<USersPropsType> {
     }
 }
 
-export type USersPropsType = mapStateToPropsType & mapDispatchToProps
+export type UsersPropsType = mapStateToPropsType & mapDispatchToProps & UserPropsType
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
-    user2: state.userReducer.users,
-    totalCountUSer: state.userReducer.totalCountUSer,
+    users: state.userReducer.users,
+    totalUserCount: state.userReducer.totalUserCount,
     countUsers: state.userReducer.countUsers,
     selectedPAge: state.userReducer.currentPAge,
     isFetching: state.userReducer.isFetching,
     toggleFollowing:state.userReducer.toggleFollowing,
-    isAuth:state.authReducer.isAyth
+    isAuth:state.authReducer.isAuth
 })
 
-
-
-
-
-
-
-
-export default compose<React.ComponentType>(connect(mapStateToProps, {
+export default compose<React.ComponentType>(connect<mapStateToPropsType,mapDispatchToProps,UserPropsType,AppStateType>(mapStateToProps, {
 
     setFollowStatus,
     setUnfollowStatus,
     setUsers,
-    setTotalCountUser,
+    setTotalUserCount,
     setSelectedPage,
     toggleIsFetching,
     setToggleFollowing,
@@ -122,5 +117,5 @@ export default compose<React.ComponentType>(connect(mapStateToProps, {
     setToggleUnfollowingThunkCreator,
 
 }),
-    withAuthRedirectComponent
+    // withAuthRedirectComponent
 )(UsersC)

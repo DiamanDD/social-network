@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import style from "./UsersС.module.css";
 import logo from "../assets/img/logo.png";
 import {UserPropsType} from "./UserContainer";
@@ -6,11 +6,11 @@ import {NavLink} from "react-router-dom";
 
 type usersApiType = {
     selectedPAge: number
-    totalCountUSer: number
+    totalUserCount: number
     countUsers: number
-    user2: UserPropsType[]
+    users: UserPropsType[]
     selectPage: (p: number) => void
-    setfollowStatus: (id: string) => void
+    setFollowStatus: (id: string) => void
     setUnfollowStatus: (id: string) => void
     toggleFollowing: string[]
     setToggleFollowing: (userId: string, isFetching: boolean) => void
@@ -18,9 +18,9 @@ type usersApiType = {
     setToggleUnfollowingThunkCreator: any
 
 }
-export const Users = (props: usersApiType) => {
+export const Users:FC<usersApiType> = (props: usersApiType) => {
     let countPage = [];
-    for (let i = 1; i <= Math.ceil(props.totalCountUSer / props.countUsers); i++) {
+    for (let i = 1; i <= Math.ceil(props.totalUserCount / props.countUsers); i++) {
         countPage.push(i)
     }
 
@@ -36,7 +36,7 @@ export const Users = (props: usersApiType) => {
                 }
 
             </div>
-            {props.user2.map(u => <div key={u.id}>
+            {props.users.map(u => <div key={u.id}>
 
                 <span>
                     <div>
@@ -48,30 +48,14 @@ export const Users = (props: usersApiType) => {
                     {
                         u.followed ?
                             <button disabled={props.toggleFollowing.some(id => id === u.id)} onClick={() => {
-                                // debugger
+
                                 props.setToggleFollowingThunkCreator(u.id)
-                                // props.setToggleFollowing(u.id,true)
-                                // UserAPI.UnFollowUser(u.id)
-                                //     .then(data => {
-                                //         if (data.resultCode === 0) {
-                                //             console.log(data)
-                                //             props.setUnfollowStatus(u.id)
-                                //         }
-                                //         props.setToggleFollowing(u.id,false)
-                                //     })
                             }
                             }>Unfollow</button>
 
                             : <button disabled={props.toggleFollowing.some(id => id === u.id)} onClick={
                                 () => {
                                     props.setToggleUnfollowingThunkCreator(u.id)
-                                    // props.setToggleFollowing(u.id,true)
-                                    // UserAPI.FollowUsr(u.id).then(data => {
-                                    //     if (data.resultCode === 0) {
-                                    //         props.setfollowStatus(u.id)
-                                    //     }
-                                    //     props.setToggleFollowing(u.id,false)
-                                    // })
                                 }
                             }>Follow</button>}
                 </span>

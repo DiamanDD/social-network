@@ -11,7 +11,6 @@ import {
     updStatusThunkCreator
 } from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirectComponent} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 export class ProfileCr extends React.Component<PropsType> {
@@ -22,6 +21,7 @@ export class ProfileCr extends React.Component<PropsType> {
         if (!UserId) {
             console.log(UserId)
             UserId = String(this.props.userID)
+
         }
         this.props.setProfileInfoThunkCreator(UserId)
         this.props.getStatusThunkCreator(UserId)
@@ -92,7 +92,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         posts: state.dialogsReducer.profilePage.posts,
          profileIInfo: state.profileReducer.profiliInfo,
-        isAuth: state.authReducer.isAyth,
+        isAuth: state.authReducer.isAuth,
         AuthId: state.authReducer.id,
         status: state.profileReducer.status,
         userID:state.authReducer.id
@@ -108,6 +108,6 @@ export default  compose<React.ComponentType>
             getStatusThunkCreator,
             updStatusThunkCreator
         }),
-            withAuthRedirectComponent,
+            // withAuthRedirectComponent,
             withRouter
     )(ProfileCr)

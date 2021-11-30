@@ -1,21 +1,16 @@
 // типизация
-import {
-    addNewMessage,
-    setProfileInfo,
-    getProfileStatus,
-    setProfileStatus
-} from "../redux/profile-reducer";
+import {addNewMessage, getProfileStatus, setProfileInfo, setProfileStatus} from "../redux/profile-reducer";
 import {addPost} from "../redux/dialogs-reducer";
 import {
     setFollowStatus,
     setSelectedPage,
     setToggleFollowing,
-    setTotalCountUser,
+    setTotalUserCount,
     setUnfollowStatus,
     setUsers,
     toggleIsFetching
 } from "../redux/users-reducer";
-import {setUserData} from "../redux/auth-reducer";
+import {setUserDataAT} from "../redux/auth-reducer";
 import {stopSubmit} from "redux-form";
 
 export type PostsType = {
@@ -38,14 +33,14 @@ export type AddNewMessageType = ReturnType<typeof addNewMessage>
 export type FollowUserHAndler = ReturnType<typeof setFollowStatus>
 export type UnFollowUserHAndler = ReturnType<typeof setUnfollowStatus>
 export type Setusers = ReturnType<typeof setUsers>
-export type setTotalCountUsers = ReturnType<typeof setTotalCountUser>
+export type setTotalUserCounts = ReturnType<typeof setTotalUserCount>
 export type selectedPAgeAT = ReturnType<typeof setSelectedPage>
 export type toggleISFetchingAT = ReturnType<typeof toggleIsFetching>
 export type toggleFollowingAT = ReturnType<typeof setToggleFollowing>
 export type setProfileInfoAT = ReturnType<typeof setProfileInfo>
 export type getProfileStatusAT = ReturnType<typeof getProfileStatus>
 export type setProfileStatusAT = ReturnType<typeof setProfileStatus>
-export type setUserDataAT = ReturnType<typeof setUserData>
+
 export type stopSubmitAT = ReturnType<typeof stopSubmit>
 
 export type ActionsType =
@@ -54,7 +49,7 @@ export type ActionsType =
     FollowUserHAndler |
     UnFollowUserHAndler|
     Setusers |
-    setTotalCountUsers |
+    setTotalUserCounts |
     selectedPAgeAT|
     toggleISFetchingAT |
     toggleFollowingAT |

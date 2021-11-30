@@ -8,14 +8,14 @@ import {AppStateType} from "./redux-store";
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SETUSERS = "SETUSERS"
-const SETTOTALCOUNTUSERS = "SETTOTALCOUNTUSERS"
+const setTotalUserCountS = "setTotalUserCountS"
 const SELECTEDPAGE = "SELECTEDPAGE"
 const TOGGLE_iS_FETCHING = "TOGGLE_iS_FETCHING"
 const TOGGLE_IS_FOLLOW = "TOGGLE_IS_FOLLOW"
 
 const initialState: initialStateType = {
     users: [],
-    totalCountUSer: 0,
+    totalUserCount: 0,
     countUsers: 25,
     currentPAge: 1,
     isFetching: false,
@@ -26,7 +26,7 @@ const initialState: initialStateType = {
 
 export type initialStateType = {
     users: UserPropsType[]
-    totalCountUSer: number
+    totalUserCount: number
     countUsers: number
     currentPAge: number
     isFetching: boolean
@@ -49,8 +49,8 @@ export const setUsers = (users: UserPropsType[]) => ({
     type: SETUSERS,
     users
 } as const)
-export const setTotalCountUser = (totalCount: number) => ({
-    type: SETTOTALCOUNTUSERS,
+export const setTotalUserCount = (totalCount: number) => ({
+    type: setTotalUserCountS,
     totalCount,
 
 } as const)
@@ -82,7 +82,7 @@ export const getUserThunkCreator = (countUsers: number, selectedPAge: number): g
 
         UserAPI.GetUsers(countUsers, selectedPAge).then(data => {
             dispatch(setUsers((data.items)))
-            dispatch(setTotalCountUser(data.totalCount))
+            dispatch(setTotalUserCount(data.totalCount))
             dispatch(toggleIsFetching(false))
         })
     }
@@ -154,9 +154,9 @@ export const userReducer = (state = initialState, action: ActionsType): initialS
         }
         case SETUSERS:
             return {...state, users: action.users}
-        case SETTOTALCOUNTUSERS:
+        case setTotalUserCountS:
             return {
-                ...state, totalCountUSer: action.totalCount
+                ...state, totalUserCount: action.totalCount
             }
         case SELECTEDPAGE:
             return {

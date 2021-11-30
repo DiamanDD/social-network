@@ -16,7 +16,7 @@ export const MyPosts = (props: MyPostsType) => {
         likes={p.likesCount}
     />)
 
-    const newpost=(value:any)=>{
+    const newPost=(value:any)=>{
         console.log((value.messageBody));
         props.addPost(value.messageBody)
     }
@@ -26,7 +26,7 @@ export const MyPosts = (props: MyPostsType) => {
                 My posts
                 <div>
 
-                    <AddMessageFormContainer onSubmit={newpost}/>
+                    <AddMessageFormContainer onSubmit={newPost}/>
                 </div>
             </div>
             {postElements}

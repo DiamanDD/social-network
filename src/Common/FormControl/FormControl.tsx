@@ -3,7 +3,7 @@ import style from "./FormControl.module.css";
 
 
 export const Textarea=({input, meta, ...props}:any)=>{
-    console.log(meta)
+
     return(
        <div >
            <textarea className={meta.error && "style.textareaErorr"} {...props} {...input} value={meta.submitting?"":meta.value  }/>

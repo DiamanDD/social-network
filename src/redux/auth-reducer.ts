@@ -1,4 +1,3 @@
-import {setUserDataAT} from "../types/type";
 import {getUserThunkCreatorAT} from "./users-reducer";
 import {autorizedApi, UserAPI} from "../Api/Api";
 import {setProfileInfo} from "./profile-reducer";
@@ -8,38 +7,46 @@ import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = "SET_USER_DATA";
 
+type setUserDataPayloadAT={
+    id:number |null,
+    login:string |null,
+    email:string |null,
+    isAuth:boolean
+}
+export type setUserDataAT={
+    type: typeof SET_USER_DATA,
+    payload:setUserDataPayloadAT
 
-export const setUserData = (id: number | null, login: string | null, email: string | null,isAyth:boolean) => ({
+}
+
+export const setUserData = (id: number | null, login: string | null, email: string | null,isAuth:boolean):setUserDataAT => ({
     type: SET_USER_DATA,
-    id,
-    login,
-    email,
-    isAyth
+    payload:{
+        id,
+        login,
+        email,
+        isAuth
+    }
 } as const)
+type initialStateType=typeof initialState
 
-
-const initialState: AuthInitialStateType = {
-    id: null,
-    email: null,
-    login: null,
-    isAyth: false
+const initialState = {
+    id: null as number |null,
+    email: null as string |null,
+    login: null as string |null,
+    isAuth: false
 }
 
-export type AuthInitialStateType = {
-    id: number | null
-    email: string | null
-    login: string | null
-    isAyth: boolean
-}
-
-export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT  => {
+export const AuthMeThunkCreator = (): getUserThunkCreatorAT  => {
 
     return (dispatch) => {
-        UserAPI.AuthMe().then(data => {
+        return  UserAPI.AuthMe().then(data => {
+
             if (data.resultCode === 0) {
                 const {
                     id, login, email
                 } = data.data
+
                 dispatch(setUserData(id, login, email,true));
 
 
@@ -55,7 +62,7 @@ export const AuthMeThunkCreator = (UserId: string): getUserThunkCreatorAT  => {
 
 }
 
-export const LoginThunkCreator = (login: string, password: string, rememberme: boolean, captcha: boolean): getUserThunkCreatorAT  => {
+export const LoginThunkCreator = (login: string, password: string, rememberme: boolean, captcha: boolean):getUserThunkCreatorAT => {
 
     return (dispatch) => {
 
@@ -63,10 +70,12 @@ export const LoginThunkCreator = (login: string, password: string, rememberme: b
             .then((data) => {
 
                 if (data.data.resultCode === 0) {
-                    console.log(data.data.data.userId)
-                    dispatch(AuthMeThunkCreator(data.data.data.userId))
+
+                    console.log(data.data.data)
+                    dispatch(AuthMeThunkCreator())
                 }
                 else{
+
 
                     // @ts-ignore
                     dispatch(stopSubmit("login",{_error:data.data.messages[0]}))
@@ -77,8 +86,8 @@ export const LoginThunkCreator = (login: string, password: string, rememberme: b
 export const LogOutThunkCreator = (): getUserThunkCreatorAT => {
 
     return (dispatch) => {
-        console.log("")
-        autorizedApi.ulogOut()
+
+          autorizedApi.ulogOut()
             .then((data) => {
 
                 if (data.data.resultCode === 0) {
@@ -89,14 +98,15 @@ export const LogOutThunkCreator = (): getUserThunkCreatorAT => {
     }
 }
 
-export const authReducer = (state: AuthInitialStateType = initialState, action: setUserDataAT ): AuthInitialStateType => {
+export const authReducer = (state: initialStateType = initialState, action: setUserDataAT ): initialStateType => {
 
     switch (action.type) {
         case SET_USER_DATA: {
+            const copystate={ ...state,
+            ...action.payload, isAuth: action.payload.isAuth}
 
             return {
-                ...state,
-                ...action, isAyth: action.isAyth
+                ...copystate
             }
         }
         default:

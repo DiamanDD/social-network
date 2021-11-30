@@ -2,6 +2,12 @@ import {ActionsType, PostsType} from "../types/type";
 
 const ADD_POST = "ADD_POST";
 export const addPost = (value:string) => ({type: ADD_POST,value} as const)
+
+type postType={
+    id:number
+    message:string
+    likesCount:number
+}
 const initialState = {
     profilePage: {
         posts: [
@@ -12,7 +18,7 @@ const initialState = {
             {id: 5, message: "куку", likesCount: 18},
             {id: 6, message: "ПИВЕТ Привет", likesCount: 15},
             {id: 7, message: "куку", likesCount: 18}
-        ],
+        ] as postType[],
 
     }
 }
@@ -23,7 +29,7 @@ export const dialogsReducer = (state = initialState, action: ActionsType):initia
     switch (action.type) {
         case ADD_POST: {
 
-            const newpost: PostsType = {
+            const newPost: PostsType = {
                 id: new Date().getTime(),
                 message: action.value,
                 likesCount: 0
@@ -33,7 +39,7 @@ export const dialogsReducer = (state = initialState, action: ActionsType):initia
                 ...state,
                 profilePage: {
                     ...state.profilePage,
-                    posts: [newpost, ...state.profilePage.posts
+                    posts: [newPost, ...state.profilePage.posts
                     ]
                 }
             }

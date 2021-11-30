@@ -33,7 +33,7 @@ const ContactForm = reduxForm<LoginFormDataType>({form: 'login'})(LoginForm)
 
 
 type logintype={
-    setUserData:(id:number,login:string,email:string,isAyth:boolean)=>void
+    setUserData:(id:number,login:string,email:string,isAuth:boolean)=>void
     LoginThunkCreator:(login: string, password: string, rememberme: boolean, captcha: boolean)=>void
     isAuth:boolean
 }
@@ -65,7 +65,7 @@ type mstpType={
 }
 const mstp=(state: AppStateType):mstpType=>{
     return{
-        isAuth:state.authReducer.isAyth
+        isAuth:state.authReducer.isAuth
     }
 
 }
