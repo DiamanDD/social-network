@@ -1,13 +1,14 @@
 import {ActionsType, PostsType} from "../types/type";
 
-const ADD_POST = "ADD_POST";
-export const addPost = (value:string) => ({type: ADD_POST,value} as const)
 
-type postType={
-    id:number
-    message:string
-    likesCount:number
+// type
+type postType = {
+    id: number
+    message: string
+    likesCount: number
 }
+type initialStateType = typeof initialState
+// state
 const initialState = {
     profilePage: {
         posts: [
@@ -19,22 +20,21 @@ const initialState = {
             {id: 6, message: "ПИВЕТ Привет", likesCount: 15},
             {id: 7, message: "куку", likesCount: 18}
         ] as postType[],
-
     }
 }
-type initialStateType=typeof initialState
 
-export const dialogsReducer = (state = initialState, action: ActionsType):initialStateType => {
+// action
+export const addPost = (value: string) => ({type: "SOCIAL_NETWORK/DIALOGS_REDUCER/ADD_POST", value} as const)
 
+// reducer
+export const dialogsReducer = (state = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
-        case ADD_POST: {
-
+        case "SOCIAL_NETWORK/DIALOGS_REDUCER/ADD_POST": {
             const newPost: PostsType = {
                 id: new Date().getTime(),
                 message: action.value,
                 likesCount: 0
             }
-
             return {
                 ...state,
                 profilePage: {
@@ -44,9 +44,7 @@ export const dialogsReducer = (state = initialState, action: ActionsType):initia
                 }
             }
         }
-
         default:
             return state
-
     }
 }

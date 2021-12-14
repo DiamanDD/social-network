@@ -10,11 +10,9 @@ import {compose} from "redux";
 type mapStateToPropsType = {
     profile: ProfileType[]
     message: MessageType[]
-
     isAuth:boolean
 }
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
-
     return {
         message: state.profileReducer.dialogsPage.message,
         profile: state.profileReducer.dialogsPage.profile,

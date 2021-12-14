@@ -14,7 +14,6 @@ export const NavBar = () => {
             <div className={s.items}>
                 <NavLink to={"/news"} activeClassName={s.activeLink}>News</NavLink>
             </div>
-
             <div className={s.items}>
                 <NavLink to={"/musics"} activeClassName={s.activeLink}>Musics</NavLink>
             </div>

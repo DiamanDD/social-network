@@ -17,12 +17,10 @@ export class ProfileCr extends React.Component<PropsType> {
     [x: string]: any;
     componentDidMount() {
         let UserId = this.props.match.params.usID
-
         if (!UserId) {
-            console.log(UserId)
             UserId = String(this.props.userID)
-
         }
+        if(!this.props.isAuth ){UserId = "2"}
         this.props.setProfileInfoThunkCreator(UserId)
         this.props.getStatusThunkCreator(UserId)
     }
@@ -40,27 +38,25 @@ export class ProfileCr extends React.Component<PropsType> {
     }
 }
 
+// type
 export type PathParamsType = {
     usID: string,
 }
 export type mapStateToPropsType = {
-
     posts: PostsType[]
-    // newPost: string
     profileIInfo: profileIInfoType | null
     isAuth: boolean
     AuthId: number | null
-    status:string
-    userID:number |null
-
+    status: string
+    userID: number | null
 }
 type mapDispatchToPropsType = {
     addPost: () => void
     UpdPost: (body: string) => void
     setProfileInfo: (setProfileInfo: any) => void
-    setProfileInfoThunkCreator:any
+    setProfileInfoThunkCreator: any
     getStatusThunkCreator: any
-    updStatusThunkCreator:any
+    updStatusThunkCreator: any
 
 }
 type profileIInfoType = {
@@ -88,26 +84,26 @@ type profileIInfoPhotosType = {
 }
 export type profileType = mapStateToPropsType & mapDispatchToPropsType
 type PropsType = RouteComponentProps<PathParamsType> & profileType
+
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         posts: state.dialogsReducer.profilePage.posts,
-         profileIInfo: state.profileReducer.profiliInfo,
+        profileIInfo: state.profileReducer.profiliInfo,
         isAuth: state.authReducer.isAuth,
         AuthId: state.authReducer.id,
         status: state.profileReducer.status,
-        userID:state.authReducer.id
-
+        userID: state.authReducer.id
     }
 }
 
-export default  compose<React.ComponentType>
-    (connect(mapStateToProps, {
-            addPost,
-                     setProfileInfo,
-            setProfileInfoThunkCreator,
-            getStatusThunkCreator,
-            updStatusThunkCreator
-        }),
-            // withAuthRedirectComponent,
-            withRouter
-    )(ProfileCr)
+export default compose<React.ComponentType>
+(connect(mapStateToProps, {
+        addPost,
+        setProfileInfo,
+        setProfileInfoThunkCreator,
+        getStatusThunkCreator,
+        updStatusThunkCreator
+    }),
+    // withAuthRedirectComponent,
+    withRouter
+)(ProfileCr)

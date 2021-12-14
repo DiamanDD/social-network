@@ -18,7 +18,7 @@ import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../Common/Preloader/Preloader";
 import {compose} from "redux";
-
+// types
 type mapStateToPropsType = {
     users: UserPropsType[]
     totalUserCount: number,
@@ -45,7 +45,6 @@ type mapDispatchToProps = {
 export type UserPropsType = {
     countUsers:number
     selectedPAge:number
-
     id: string
     photos: any
     followed: boolean
@@ -59,14 +58,10 @@ export class UsersC extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.getUserThunkCreator(this.props.countUsers, this.props.selectedPAge)
     }
-
     selectPage = (page: number) => {
         this.props.SelectPageThunkCreator(page,this.props.countUsers)
     }
-
     render() {
-
-
         return (
             <>
                {
@@ -103,7 +98,6 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 })
 
 export default compose<React.ComponentType>(connect<mapStateToPropsType,mapDispatchToProps,UserPropsType,AppStateType>(mapStateToProps, {
-
     setFollowStatus,
     setUnfollowStatus,
     setUsers,

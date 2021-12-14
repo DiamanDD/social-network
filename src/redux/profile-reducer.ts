@@ -1,36 +1,10 @@
 import {ActionsType, MessageType} from "../types/type";
 import {profileApi, UserAPI} from "../Api/Api";
 import {getStatusThunkCreatorAT, getUserThunkCreatorAT, updStatusThunkCreatorAT} from "./users-reducer";
+// type
+export type InitialStateType = typeof initialState
 
-const ADD_MESSAGE = "ADD_MESSAGE";
-// const UPDATE_MESSAGE = "UPDATE_MESSAGE";
-const SET_PROFILE_INFO = "SET_PROFILE_INFO"
-const GET_PROFILE_STATUS = "GET_PROFILE_STATUS"
-const SET_PROFILE_STATUS="SET_PROFILE_STATUS"
-
-// export const onChangeHangler = (updMessage: string) => ({
-//     type: UPDATE_MESSAGE,
-//     updMessage: updMessage
-// } as const)
-export const setProfileInfo = (profileinfo: any) => ({
-    type: SET_PROFILE_INFO,
-    profileinfo
-
-} as const)
-
-export const getProfileStatus = (status: any) => ({
-    type: GET_PROFILE_STATUS,
-    status
-
-} as const)
-
-export const setProfileStatus = (status: any) => ({
-    type: SET_PROFILE_STATUS,
-    status
-
-} as const)
-
-
+// sate
 const initialState = {
     dialogsPage: {
         profile: [
@@ -44,80 +18,70 @@ const initialState = {
             {id: 2, message: "hallo2"},
             {id: 3, message: "hallo3"}
         ],
-
     },
     profiliInfo: null,
-    status:"",
+    status: "",
 }
 
-type InitialStateType = typeof initialState
+// action
+export const setProfileInfo = (profileinfo: any) => ({
+    type: "SOCIAL_NETWORK/PROFILE_REDUCER/SET_PROFILE_INFO",
+    profileinfo
 
+} as const)
+export const getProfileStatus = (status: any) => ({
+    type: "SOCIAL_NETWORK/PROFILE_REDUCER/GET_PROFILE_STATUS",
+    status
 
-export const addNewMessage = (value:string) => ({type: ADD_MESSAGE, value} as const)
-export const setProfileInfoThunkCreator=(UserId:string):getUserThunkCreatorAT=>{
+} as const)
+export const setProfileStatus = (status: any) => ({
+    type: "SOCIAL_NETWORK/PROFILE_REDUCER/SET_PROFILE_STATUS",
+    status
 
-    return        (dispatch)=>{
+} as const)
+export const addNewMessage = (value: string) => ({type: "SOCIAL_NETWORK/PROFILE_REDUCER/ADD_MESSAGE", value} as const)
 
-        UserAPI.GetUser(UserId)
-            .then(data => {
-
-                if (data) {
-                    dispatch(setProfileInfo(data))
-                }
-            })
-    }
-
-}
-export const getStatusThunkCreator=(UserId:string):getStatusThunkCreatorAT=>{
-    return        (dispatch)=> {
-        profileApi.getStatus(UserId)
-            .then(data => {
-                if (data) {
-                    dispatch(setProfileStatus(data.data))
-                }
-            })
-    }
-}
-export const updStatusThunkCreator=(status:string):updStatusThunkCreatorAT=>{
-    return        (dispatch)=> {
-        profileApi.updStatus(status)
-            .then(data => {
-                if (data.data.resultCode===0) {
-                    dispatch(setProfileStatus(status))
-                }
-            })
+// thunk
+export const setProfileInfoThunkCreator = (UserId: string): getUserThunkCreatorAT => {
+    return async (dispatch) => {
+        const data = await UserAPI.GetUser(UserId)
+        if (data) {
+            dispatch(setProfileInfo(data))
+        }
     }
 }
-export const profileReducer = (state:InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const getStatusThunkCreator = (UserId: string): getStatusThunkCreatorAT => {
+    return async (dispatch) => {
+        const data = await profileApi.getStatus(UserId)
+        if (data) {
+            dispatch(setProfileStatus(data.data))
+        }
+    }
+}
+export const updStatusThunkCreator = (status: string): updStatusThunkCreatorAT => {
+    return async (dispatch) => {
+        const data = await profileApi.updStatus(status)
+        if (data.data.resultCode === 0) {
+            dispatch(setProfileStatus(status))
+        }
 
+    }
+}
+
+// reducer
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
+        case "SOCIAL_NETWORK/PROFILE_REDUCER/SET_PROFILE_STATUS": {
 
-        // case SET_PROFILE_STATUS:{
-        //
-        //     return {
-        //         ...state,status:action.status
-        //     }
-        // }
-        //
-        // case UPDATE_MESSAGE: {
-        //     debugger
-        //     return {
-        //         ...state,
-        //         dialogsPage: {
-        //             ...state.dialogsPage,
-        //
-        //         }
-        //     }
-        // }
-        case ADD_MESSAGE: {
-
-
+            return {
+                ...state, status: action.status
+            }
+        }
+        case "SOCIAL_NETWORK/PROFILE_REDUCER/ADD_MESSAGE": {
             const newMessagePost: MessageType = {
                 id: new Date().getTime(),
                 message: action.value
-
             }
-
             return {
                 ...state,
                 dialogsPage: {
@@ -125,8 +89,7 @@ export const profileReducer = (state:InitialStateType = initialState, action: Ac
                 }
             }
         }
-        case SET_PROFILE_INFO:
-
+        case "SOCIAL_NETWORK/PROFILE_REDUCER/SET_PROFILE_INFO":
             return {
                 ...state, profiliInfo: action.profileinfo
             }

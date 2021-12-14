@@ -1,12 +1,10 @@
 import React, {ChangeEvent} from "react";
-
 type ProfileInfoType = {
     profiliInfo: any
     profileStatus: string
     updStatusThunkCreator: (status: string) => void
 
 }
-
 export class ProfileInfo extends React.Component<ProfileInfoType> {
     state = {
         editMode: false,

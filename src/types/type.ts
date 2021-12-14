@@ -57,7 +57,7 @@ export type ActionsType =
     setUserDataAT |
     getProfileStatusAT |
     setProfileStatusAT
-    // stopSubmitAT
+
 
 
 

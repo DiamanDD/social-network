@@ -7,10 +7,6 @@ import thunkMiddleWare from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 import {appReducer} from "./app-reducer";
 
-
-
-
-
 let rootReducer =combineReducers({
     dialogsReducer,
     profileReducer,
@@ -18,8 +14,6 @@ let rootReducer =combineReducers({
     authReducer,
     appReducer,
     form: formReducer
-
-
 } )
 
 export type AppStateType =ReturnType<typeof rootReducer>

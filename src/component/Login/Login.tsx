@@ -14,8 +14,6 @@ type LoginFormDataType={
 }
 
 export const LoginForm :React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
-
-
     return (
         <form onSubmit={props.handleSubmit}>
             <div><Field type={"text"} name={"login"} component={Input} validate={[requaired]} /></div>
@@ -29,48 +27,37 @@ export const LoginForm :React.FC<InjectedFormProps<LoginFormDataType>> = (props)
 }
 
 const ContactForm = reduxForm<LoginFormDataType>({form: 'login'})(LoginForm)
-
-
-
+// type
 type logintype={
     setUserData:(id:number,login:string,email:string,isAuth:boolean)=>void
     LoginThunkCreator:(login: string, password: string, rememberme: boolean, captcha: boolean)=>void
     isAuth:boolean
 }
-
+type mstpType={
+    isAuth:boolean
+}
 
 export const Login = (props:logintype )=> {
-
     const onSubmit=(formData:LoginFormDataType)=>{
-
         props.LoginThunkCreator(formData.login,formData.password,formData.rememberMe=false,true)
-
     }
     if(props.isAuth){
         return <Redirect to={"/profile"}/>
     }
-
     return (
         <div>
             <h1>Необходимо авторизоваться</h1>
-
             <ContactForm onSubmit={onSubmit}/>
         </div>
     )
-
 }
 
-type mstpType={
-    isAuth:boolean
-}
 const mstp=(state: AppStateType):mstpType=>{
     return{
         isAuth:state.authReducer.isAuth
     }
 
 }
-
-
 export const LoginContainer=connect(mstp,{
     setUserData,
     LoginThunkCreator

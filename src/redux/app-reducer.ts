@@ -3,57 +3,42 @@ import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {ActionsType} from "../types/type";
 
-
-const INITIALIZE_SUCCESS = "INITIALIZE_SUCCESS";
-
-
-export type initializeSuccessAT={
-    type: typeof INITIALIZE_SUCCESS,
-
-
+// type
+export type initializeSuccessAT = {
+    type: "SOCIAL_NETWORK/APP_REDUCER/INITIALIZE_SUCCESS",
 }
-
-export const initializeSuccess = ():initializeSuccessAT => ({
-    type: INITIALIZE_SUCCESS,
-
-} as const)
-type initialStateType=typeof initialState
-
-const initialState = {
-    initialaze:false
-}
-
-
+type initialStateType = typeof initialState
 export type initialazedThunkCreatorAT = ThunkAction<void, AppStateType, unknown, ActionsType>
-export const initialazedThunkCreator = ():initialazedThunkCreatorAT => {
 
-    return (dispatch) => {
+// state
+const initialState = {
+    initialaze: false
+}
 
-             let promise= dispatch(AuthMeThunkCreator())
+// action
+export const initializeSuccess = (): initializeSuccessAT => ({
+    type: "SOCIAL_NETWORK/APP_REDUCER/INITIALIZE_SUCCESS",
+} as const)
 
-                // @ts-ignore
-
-                 promise.then(()=>{
-                     // @ts-ignore
-                     dispatch(initializeSuccess())
-                 })
-
+// Thunk
+export const initialazedThunkCreator = () => {
+    return (dispatch: any) => {
+        let promise = dispatch(AuthMeThunkCreator())
+        promise.then(() => {
+            dispatch(initializeSuccess())
+        })
     }
 }
 
 
-export const appReducer = (state: initialStateType = initialState, action: initializeSuccessAT ): initialStateType => {
-
+// reduceer
+export const appReducer = (state: initialStateType = initialState, action: initializeSuccessAT): initialStateType => {
     switch (action.type) {
-
-        case INITIALIZE_SUCCESS: {
-
-            let copy={
+        case "SOCIAL_NETWORK/APP_REDUCER/INITIALIZE_SUCCESS": {
+            let copy = {
                 ...state, initialaze: true
             }
-
             return {...copy}
-
         }
         default:
             return state

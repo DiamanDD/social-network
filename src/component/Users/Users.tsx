@@ -1,8 +1,7 @@
 import React, {FC} from "react";
-import style from "./UsersС.module.css";
-import logo from "../assets/img/logo.png";
 import {UserPropsType} from "./UserContainer";
-import {NavLink} from "react-router-dom";
+import {User} from "./User/User";
+import {Paginator} from "../../Common/Paginator/Paginator";
 
 type usersApiType = {
     selectedPAge: number
@@ -18,62 +17,24 @@ type usersApiType = {
     setToggleUnfollowingThunkCreator: any
 
 }
-export const Users:FC<usersApiType> = (props: usersApiType) => {
-    let countPage = [];
-    for (let i = 1; i <= Math.ceil(props.totalUserCount / props.countUsers); i++) {
-        countPage.push(i)
-    }
+export const Users: FC<usersApiType> = ({users, ...props}: usersApiType) => {
 
     return (
         <div>
             <div>
-                {
-                    countPage.map(p =>
-                        <span onClick={() => props.selectPage(p)}
-                              key={p} className={props.selectedPAge === p ? style.selectPage : ""}>{p} |</span>
-                    )
-
-                }
-
+                <Paginator countUsers={props.countUsers} selectedPAge={props.selectedPAge}
+                           totalUserCount={props.totalUserCount} selectPage={props.selectPage}/>
+                <User
+                    users={users}
+                    toggleFollowing={props.toggleFollowing}
+                    setToggleFollowingThunkCreator={props.setToggleFollowingThunkCreator}
+                    setToggleUnfollowingThunkCreator={props.setToggleUnfollowingThunkCreator}
+                />
             </div>
-            {props.users.map(u => <div key={u.id}>
 
-                <span>
-                    <div>
-                        <NavLink to={`/profile/${u.id}`}>
-                             < img src={u.photos.large !== null ? u.photos.large : logo} alt={"icon"}
-                                   className={style.logo}/>
-                        </NavLink>
-                       </div>
-                    {
-                        u.followed ?
-                            <button disabled={props.toggleFollowing.some(id => id === u.id)} onClick={() => {
-
-                                props.setToggleFollowingThunkCreator(u.id)
-                            }
-                            }>Unfollow</button>
-
-                            : <button disabled={props.toggleFollowing.some(id => id === u.id)} onClick={
-                                () => {
-                                    props.setToggleUnfollowingThunkCreator(u.id)
-                                }
-                            }>Follow</button>}
-                </span>
-                <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
-                    </span>
-                     <span>
-                        <div>{"u.cityName"}</div>
-                        <div>{"u.countyName"}</div>
-                    </span>
-                </span>
-            </div>)
-
-            }
 
         </div>
     )
 
 }
+

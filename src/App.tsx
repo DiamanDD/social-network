@@ -24,27 +24,18 @@ type mapDispatchToProps = {
 }
 type mapStateToPropsType={
     initialaze:boolean
+    iaAuth:boolean
 }
 class App extends React.Component<mapDispatchToProps&mapStateToPropsType> {
-
-
     componentDidMount() {
-
         this.props.initialazedThunkCreator()
-
-
-
     }
-
     render() {
-
         if (!this.props.initialaze){
            return <Preloader/>
         }
-
         return (
             <BrowserRouter>
-
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <NavBar/>
@@ -63,7 +54,6 @@ class App extends React.Component<mapDispatchToProps&mapStateToPropsType> {
                         <Route path={"/news"} component={News}/>
                         <Route path={"/musics"} component={Musics}/>
                         <Route path={"/settings"} component={Settings}/>
-
                     </div>
                 </div>
             </BrowserRouter>
@@ -72,7 +62,8 @@ class App extends React.Component<mapDispatchToProps&mapStateToPropsType> {
 }
 const mapStateToProps = (state: AppStateType):mapStateToPropsType=>{
     return {
-        initialaze:state.appReducer.initialaze
+        initialaze:state.appReducer.initialaze,
+        iaAuth:state.authReducer.isAuth
     }
 }
 export default compose(

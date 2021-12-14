@@ -7,29 +7,31 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {PathParamsType} from "../Profile/ProfileContainer";
 import {setProfileInfo} from "../../redux/profile-reducer";
 
+// type
 type mapStateToPropsType = {
     id: number | null
     email: string | null
     login: string | null
     isAuth: boolean
-
 }
 type mapDispatchToProps = {
     setProfileInfo: (setProfileInfo: any) => void
-    LogOutThunkCreator:()=>void
+    LogOutThunkCreator: () => void
 }
-
 type HeaderContainerProps = mapStateToPropsType & mapDispatchToProps & RouteComponentProps<PathParamsType>
+
 
 class HeaderContainer extends React.Component<HeaderContainerProps> {
 
+
+
     render() {
         return (
-            <Header email={this.props.email} id={this.props.id} login={this.props.login} isAuth={this.props.isAuth} LogOutThunkCreator={this.props.LogOutThunkCreator}/>
+            <Header email={this.props.email} id={this.props.id} login={this.props.login} isAuth={this.props.isAuth}
+                    LogOutThunkCreator={this.props.LogOutThunkCreator}/>
         );
     }
 }
-
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 
@@ -38,9 +40,8 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     login: state.authReducer.login,
     isAuth: state.authReducer.isAuth
 
-
 })
 export default connect(mapStateToProps, {
-    setProfileInfo,LogOutThunkCreator
+    setProfileInfo, LogOutThunkCreator
 
 })(withRouter(HeaderContainer));
