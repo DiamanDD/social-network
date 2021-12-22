@@ -35,10 +35,9 @@ export const initialazedThunkCreator = () => {
 export const appReducer = (state: initialStateType = initialState, action: initializeSuccessAT): initialStateType => {
     switch (action.type) {
         case "SOCIAL_NETWORK/APP_REDUCER/INITIALIZE_SUCCESS": {
-            let copy = {
+            return {
                 ...state, initialaze: true
             }
-            return {...copy}
         }
         default:
             return state

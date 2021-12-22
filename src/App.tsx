@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import {NavBar} from "./component/NavBar/NavBar";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import {News} from "./component/News/News";
 import {Musics} from "./component/Musics/Musics";
 import {Settings} from "./component/Settings/Settings";
@@ -31,11 +31,16 @@ class App extends React.Component<mapDispatchToProps&mapStateToPropsType> {
         this.props.initialazedThunkCreator()
     }
     render() {
+        console.log(this.props)
         if (!this.props.initialaze){
+
            return <Preloader/>
         }
+        if(!this.props.iaAuth){
+            <Redirect to={"/profile/2"}/>
+        }
         return (
-            <BrowserRouter>
+
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <NavBar/>
@@ -56,7 +61,7 @@ class App extends React.Component<mapDispatchToProps&mapStateToPropsType> {
                         <Route path={"/settings"} component={Settings}/>
                     </div>
                 </div>
-            </BrowserRouter>
+
         );
     }
 }

@@ -17,19 +17,33 @@ type usersApiType = {
     setToggleUnfollowingThunkCreator: any
 
 }
-export const Users: FC<usersApiType> = ({users, ...props}: usersApiType) => {
+export const Users: FC<usersApiType> = ({
+                                            users,
+                                            countUsers,
+                                            selectPage,
+                                            totalUserCount,
+                                            selectedPAge,
+                                            toggleFollowing,
+                                            setToggleFollowingThunkCreator,
+                                            setToggleUnfollowingThunkCreator,
+                                            ...props
+                                        }: usersApiType) => {
 
     return (
         <div>
             <div>
-                <Paginator countUsers={props.countUsers} selectedPAge={props.selectedPAge}
-                           totalUserCount={props.totalUserCount} selectPage={props.selectPage}/>
-                <User
-                    users={users}
-                    toggleFollowing={props.toggleFollowing}
-                    setToggleFollowingThunkCreator={props.setToggleFollowingThunkCreator}
-                    setToggleUnfollowingThunkCreator={props.setToggleUnfollowingThunkCreator}
-                />
+                <Paginator countUsers={countUsers} selectedPAge={selectedPAge}
+                           totalUserCount={totalUserCount} selectPage={selectPage} portion={25}/>
+                {
+                    users.map(u => <User
+                            u={u}
+                            toggleFollowing={toggleFollowing}
+                            setToggleFollowingThunkCreator={setToggleFollowingThunkCreator}
+                            setToggleUnfollowingThunkCreator={setToggleUnfollowingThunkCreator}
+                        />
+                    )
+                }
+
             </div>
 
 

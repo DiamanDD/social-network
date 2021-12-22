@@ -14,17 +14,24 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 
 export class ProfileCr extends React.Component<PropsType> {
+
     [x: string]: any;
+
     componentDidMount() {
         let UserId = this.props.match.params.usID
         if (!UserId) {
             UserId = String(this.props.userID)
         }
-        if(!this.props.isAuth ){UserId = "2"}
+
+        console.log("did mount")
+        // if(!this.props.isAuth ){UserId="2"}
         this.props.setProfileInfoThunkCreator(UserId)
         this.props.getStatusThunkCreator(UserId)
+
     }
+
     render() {
+
         return (
             <Profile
                 posts={this.props.posts}

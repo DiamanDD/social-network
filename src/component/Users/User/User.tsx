@@ -5,13 +5,13 @@ import React from "react";
 import {UserPropsType} from "../UserContainer";
 
 type LocalUserPropsType = {
-    users: UserPropsType[]
+    u: UserPropsType
     toggleFollowing: string[]
     setToggleFollowingThunkCreator: any
     setToggleUnfollowingThunkCreator: any
 }
 export const User = ({
-                         users,
+                         u,
                          toggleFollowing,
                          setToggleFollowingThunkCreator,
                          setToggleUnfollowingThunkCreator,
@@ -20,7 +20,7 @@ export const User = ({
     return (
         <>
             {
-                users.map(u => <div key={u.id}>
+                ( <div key={u.id}>
                 <span>
                     <div>
                         <NavLink to={`/profile/${u.id}`}>

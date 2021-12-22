@@ -25,8 +25,8 @@ type mapStateToPropsType = {
     countUsers: number
     selectedPAge: number
     isFetching: boolean
-    toggleFollowing:string[]
-    isAuth:boolean
+    toggleFollowing: string[]
+    isAuth: boolean
 }
 type mapDispatchToProps = {
     setFollowStatus: (id: string) => void
@@ -35,16 +35,16 @@ type mapDispatchToProps = {
     setTotalUserCount: (totalCount: number) => void
     setSelectedPage: (selectedPAgeAT: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-    setToggleFollowing: (userId:string,isFetching:boolean) => void
-    getUserThunkCreator: (countUsers: number, selectedPAge: number)=>void
-    SelectPageThunkCreator:(page:number,countUsers:number)=>void
-    setToggleFollowingThunkCreator:(UserId:string)=>void
-    setToggleUnfollowingThunkCreator:(UserId:string)=>void
+    setToggleFollowing: (userId: string, isFetching: boolean) => void
+    getUserThunkCreator: (countUsers: number, selectedPAge: number) => void
+    SelectPageThunkCreator: (page: number, countUsers: number) => void
+    setToggleFollowingThunkCreator: (UserId: string) => void
+    setToggleUnfollowingThunkCreator: (UserId: string) => void
 
 }
 export type UserPropsType = {
-    countUsers:number
-    selectedPAge:number
+    countUsers: number
+    selectedPAge: number
     id: string
     photos: any
     followed: boolean
@@ -58,29 +58,29 @@ export class UsersC extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.getUserThunkCreator(this.props.countUsers, this.props.selectedPAge)
     }
+
     selectPage = (page: number) => {
-        this.props.SelectPageThunkCreator(page,this.props.countUsers)
+        this.props.SelectPageThunkCreator(page, this.props.countUsers)
     }
+
     render() {
         return (
             <>
-               {
-                    this.props.isFetching
-                        ? <Preloader/>
-                        : <Users
-                            users={this.props.users}
-                            totalUserCount={this.props.totalUserCount}
-                            countUsers={this.props.countUsers}
-                            selectedPAge={this.props.selectedPAge}
-                            setFollowStatus={this.props.setFollowStatus}
-                            setUnfollowStatus={this.props.setUnfollowStatus}
-                            selectPage={this.selectPage}
-                            setToggleFollowing={this.props.setToggleFollowing}
-                            toggleFollowing={this.props.toggleFollowing}
-                            setToggleFollowingThunkCreator={this.props.setToggleFollowingThunkCreator}
-                            setToggleUnfollowingThunkCreator={this.props.setToggleUnfollowingThunkCreator}
-                        />
-                }
+                {this.props.isFetching && <Preloader/>}
+                <Users
+                    users={this.props.users}
+                    totalUserCount={this.props.totalUserCount}
+                    countUsers={this.props.countUsers}
+                    selectedPAge={this.props.selectedPAge}
+                    setFollowStatus={this.props.setFollowStatus}
+                    setUnfollowStatus={this.props.setUnfollowStatus}
+                    selectPage={this.selectPage}
+                    setToggleFollowing={this.props.setToggleFollowing}
+                    toggleFollowing={this.props.toggleFollowing}
+                    setToggleFollowingThunkCreator={this.props.setToggleFollowingThunkCreator}
+                    setToggleUnfollowingThunkCreator={this.props.setToggleUnfollowingThunkCreator}
+                />
+
             </>
         )
     }
@@ -93,23 +93,23 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     countUsers: state.userReducer.countUsers,
     selectedPAge: state.userReducer.currentPAge,
     isFetching: state.userReducer.isFetching,
-    toggleFollowing:state.userReducer.toggleFollowing,
-    isAuth:state.authReducer.isAuth
+    toggleFollowing: state.userReducer.toggleFollowing,
+    isAuth: state.authReducer.isAuth
 })
 
-export default compose<React.ComponentType>(connect<mapStateToPropsType,mapDispatchToProps,UserPropsType,AppStateType>(mapStateToProps, {
-    setFollowStatus,
-    setUnfollowStatus,
-    setUsers,
-    setTotalUserCount,
-    setSelectedPage,
-    toggleIsFetching,
-    setToggleFollowing,
-    getUserThunkCreator,
-    SelectPageThunkCreator,
-    setToggleFollowingThunkCreator,
-    setToggleUnfollowingThunkCreator,
+export default compose<React.ComponentType>(connect<mapStateToPropsType, mapDispatchToProps, UserPropsType, AppStateType>(mapStateToProps, {
+        setFollowStatus,
+        setUnfollowStatus,
+        setUsers,
+        setTotalUserCount,
+        setSelectedPage,
+        toggleIsFetching,
+        setToggleFollowing,
+        getUserThunkCreator,
+        SelectPageThunkCreator,
+        setToggleFollowingThunkCreator,
+        setToggleUnfollowingThunkCreator,
 
-}),
+    }),
     // withAuthRedirectComponent
 )(UsersC)
