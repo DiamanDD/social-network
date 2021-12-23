@@ -36,6 +36,7 @@ export const Users: FC<usersApiType> = ({
                            totalUserCount={totalUserCount} selectPage={selectPage} portion={25}/>
                 {
                     users.map(u => <User
+                        key={u.id}
                             u={u}
                             toggleFollowing={toggleFollowing}
                             setToggleFollowingThunkCreator={setToggleFollowingThunkCreator}
